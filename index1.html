@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuyển Dụng | CÔNG TY TNHH QUẢN LÝ THƯƠNG HIỆU NANSHUO VIỆT NAM</title>
+    <!-- Tailwind CSS và FontAwesome Icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts cho kiểu chữ sang trọng -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    },
+                    colors: {
+                        primary: '#b29267',      // Vàng đồng cao cấp (Luxury Bronze)
+                        primaryDark: '#8e714b',  // Vàng đồng đậm
+                        secondary: '#111827',    // Đen Obsidian sâu lắng
+                        accent: '#0f5a47',       // Xanh Ngọc Lục Bảo (Emerald) đại diện cho thương hiệu thời thượng
+                        bgLight: '#faf9f6',      // Trắng kem ấm (Alabaster) thanh tao
+                        brandBlue: '#0072FF',    // Xanh dương thương hiệu từ logo mới
+                        brandDark: '#333333'     // Xám đen thương hiệu từ logo mới
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #faf9f6;
+        }
+        .serif-title {
+            font-family: 'Playfair Display', serif;
+        }
+        .luxury-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0l40 40-40 40L0 40z' fill='%23b29267' fill-opacity='0.02' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Hiệu ứng di chuột mềm mại chuẩn Premium */
+        .premium-card {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .premium-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -15px rgba(178, 146, 103, 0.15);
+        }
+        /* Style thanh cuộn đẹp mắt */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #faf9f6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #b29267;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8e714b;
+        }
+
+        /* Cơ chế ẩn hiện ngôn ngữ tối ưu thông qua thẻ html[lang] */
+        html[lang="vi"] .lang-zh { display: none !important; }
+        html[lang="zh"] .lang-vi { display: none !important; }
+    </style>
+</head>
+<body class="text-gray-800 antialiased bg-bgLight">
+
+    <!-- THANH ĐIỀU HƯỚNG -->
+    <nav class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50 transition-all duration-300 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <!-- Logo & Thương Hiệu chính thức -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="javascript:void(0)" onclick="navigateTo('recruitment')" class="flex items-center gap-3.5 group">
+                        <!-- Biểu tượng logo vẽ chính xác theo ảnh của bạn -->
+                        <div class="w-12 h-12 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+                            <svg viewBox="0 0 100 100" class="w-full h-full">
+                                <path d="M70 20 L25 46 L50 46 L20 80 L75 54 L50 54 Z" fill="#333333" />
+                                <path d="M70 20 L25 46 L55 46 L40 38 Z" fill="#0072FF" />
+                                <path d="M45 46 L20 80 L52 54 L41 46 Z" fill="#333333" />
+                                <path d="M41 46 L60 46 L75 54 L45 54 Z" fill="#0072FF" />
+                            </svg>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="flex items-baseline gap-1">
+                                <span class="font-bold text-xl tracking-wider text-secondary uppercase font-sans">Nanshuo</span>
+                                <span class="font-bold text-base text-gray-700 tracking-normal font-sans">南硕</span>
+                            </div>
+                            <span class="text-[9px] text-gray-400 font-semibold tracking-widest uppercase lang-vi">Brand Management</span>
+                            <span class="text-[9px] text-gray-400 font-semibold tracking-widest uppercase lang-zh">品牌管理</span>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <!-- VI Menu Links -->
+                    <a href="javascript:void(0)" onclick="navigateTo('about-us')" class="lang-vi text-gray-600 hover:text-primary font-semibold text-sm tracking-wide transition-colors">Về Chúng Tôi</a>
+                    <a href="javascript:void(0)" onclick="navigateTo('recruitment', '#brands')" class="lang-vi text-gray-600 hover:text-primary font-semibold text-sm tracking-wide transition-colors">Thương Hiệu</a>
+                    <a href="javascript:void(0)" onclick="navigateTo('recruitment', '#culture')" class="lang-vi text-gray-600 hover:text-primary font-semibold text-sm tracking-wide transition-colors">Văn Hóa</a>
+                    <a href="javascript:void(0)" onclick="navigateTo('recruitment', '#benefits')" class="lang-vi text-gray-600 hover:text-primary font-semibold text-sm tracking-wide transition-colors">Đặc Quyền</a>
+                    <a href="javascript:void(0)" onclick="navigateTo('recruitment', '#jobs')" class="lang-vi text-gray-600 hover:text-primary font-semibold text-sm tracking-wide transition-colors">Vị Trí</a>
+                    
+                    <!-- ZH Menu Links -->
+                    <a href="javascript:void(0)" onclick="navigateTo('about-us')" class="lang-zh text-gray-600 hover:text-primary font-semibold text-sm tracking-wide transition-colors">关于我们</a>
+                    <a href="javascript:void(0)" onclick="navigateTo('recruitment', '#brands')" class="lang-zh text-gray-600 hover:text-primary font-semibold text-sm tracking-wide transition-colors">品牌矩阵</a>
+                    <a href="javascript:void(0)" onclick="navigateTo('recruitment', '#culture')" class="lang-zh text-gray-600 hover:text-primary font-semibold text-sm tracking-wide transition-colors">企业文化</a>
+                    <a href="javascript:void(0)" onclick="navigateTo('recruitment', '#benefits')" class="lang-zh text-gray-600 hover:text-primary font-semibold text-sm tracking-wide transition-colors">专属福利</a>
+                    <a href="javascript:void(0)" onclick="navigateTo('recruitment', '#jobs')" class="lang-zh text-gray-600 hover:text-primary font-semibold text-sm tracking-wide transition-colors">招募岗位</a>
+
+                    <!-- Nút Đổi Ngôn Ngữ -->
+                    <div class="flex items-center bg-gray-100 p-1 rounded-lg border border-gray-200">
+                        <button onclick="switchLanguage('vi')" id="lang-btn-vi" class="lang-switch-btn px-2.5 py-1 text-xs font-bold rounded-md transition-all bg-primary text-white">VI</button>
+                        <button onclick="switchLanguage('zh')" id="lang-btn-zh" class="lang-switch-btn px-2.5 py-1 text-xs font-bold rounded-md transition-all text-gray-500 hover:text-secondary">ZH</button>
+                    </div>
+
+                    <a href="javascript:void(0)" onclick="navigateTo('recruitment', '#jobs')" class="bg-secondary text-white px-6 py-3 rounded-lg font-bold text-xs tracking-wider uppercase hover:bg-primary transition-all duration-300 shadow-sm">
+                        <span class="lang-vi">Tuyển Dụng</span>
+                        <span class="lang-zh">招贤纳士</span>
+                    </a>
+                </div>
+
+                <!-- Nút Menu Mobile -->
+                <div class="md:hidden flex items-center gap-4">
+                    <div class="flex items-center bg-gray-100 p-0.5 rounded-lg border border-gray-200">
+                        <button onclick="switchLanguage('vi')" id="m-lang-btn-vi" class="m-lang-switch-btn px-2 py-1 text-[10px] font-bold rounded-md transition-all bg-primary text-white">VI</button>
+                        <button onclick="switchLanguage('zh')" id="m-lang-btn-zh" class="m-lang-switch-btn px-2 py-1 text-[10px] font-bold rounded-md transition-all text-gray-500">ZH</button>
+                    </div>
+
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-primary focus:outline-none p-2 rounded-lg transition-colors">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-100 absolute w-full left-0 shadow-xl">
+            <div class="px-4 pt-2 pb-6 space-y-1 sm:px-3">
+                <a href="javascript:void(0)" onclick="navigateTo('about-us')" class="lang-vi block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary hover:bg-gray-50">Về Chúng Tôi</a>
+                <a href="javascript:void(0)" onclick="navigateTo('recruitment', '#brands')" class="lang-vi block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary hover:bg-gray-50">Thương Hiệu</a>
+                <a href="javascript:void(0)" onclick="navigateTo('recruitment', '#culture')" class="lang-vi block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary hover:bg-gray-50">Văn Hóa</a>
+                <a href="javascript:void(0)" onclick="navigateTo('recruitment', '#benefits')" class="lang-vi block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary hover:bg-gray-50">Đặc Quyền</a>
+                <a href="javascript:void(0)" onclick="navigateTo('recruitment', '#jobs')" class="lang-vi block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary hover:bg-gray-50">Vị Trí Tuyển Dụng</a>
+                
+                <a href="javascript:void(0)" onclick="navigateTo('about-us')" class="lang-zh block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary hover:bg-gray-50">关于我们</a>
+                <a href="javascript:void(0)" onclick="navigateTo('recruitment', '#brands')" class="lang-zh block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary hover:bg-gray-50">品牌矩阵</a>
+                <a href="javascript:void(0)" onclick="navigateTo('recruitment', '#culture')" class="lang-zh block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary hover:bg-gray-50">企业文化</a>
+                <a href="javascript:void(0)" onclick="navigateTo('recruitment', '#benefits')" class="lang-zh block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary hover:bg-gray-50">专属福利</a>
+                <a href="javascript:void(0)" onclick="navigateTo('recruitment', '#jobs')" class="lang-zh block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary hover:bg-gray-50">招募岗位</a>
+
+                <a href="javascript:void(0)" onclick="navigateTo('recruitment', '#jobs')" class="block mt-4 text-center px-4 py-3.5 border border-transparent text-base font-bold rounded-lg text-white bg-secondary hover:bg-primary tracking-wider uppercase w-full transition-all">
+                    <span class="lang-vi">Nộp Đơn Tuyển</span>
+                    <span class="lang-zh">立即加入</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTAINER CHỨA CÁC TRANG (VIEWS) -->
+    <div id="views-container">
+        
+        <!-- ================= VIEW 1: TRANG CHỦ TUYỂN DỤNG ================= -->
+        <div id="view-recruitment" class="view-panel block">
+            <!-- SECTION HERO -->
+            <section class="relative bg-white overflow-hidden luxury-pattern">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32 pt-16 md:pt-24">
+                        <main class="mt-10 mx-auto max-w-7xl sm:mt-12 md:mt-16 lg:mt-20 xl:mt-28">
+                            <div class="sm:text-center lg:text-left">
+                                <span class="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-amber-50 text-primary border border-primary/20 text-xs font-semibold tracking-widest uppercase mb-6">
+                                    <i class="fa-solid fa-gem text-[10px]"></i> 
+                                    <span class="lang-vi">Nanshuo Careers 2026</span>
+                                    <span class="lang-zh">南朔招贤纳士 2026</span>
+                                </span>
+
+                                <h1 class="text-4xl tracking-tight font-extrabold text-secondary sm:text-5xl md:text-6xl serif-title leading-tight">
+                                    <span class="block lang-vi">Định Hình Phong Cách,</span>
+                                    <span class="block text-primary lang-vi">Kiến Tạo Thương Hiệu</span>
+                                    <span class="block lang-zh">塑造奢华风格</span>
+                                    <span class="block text-primary lang-zh">缔造时尚品牌</span>
+                                </h1>
+
+                                <p class="mt-4 text-gray-600 text-base sm:text-lg sm:max-w-xl sm:mx-auto md:text-lg lg:mx-0 leading-relaxed font-light">
+                                    <span class="lang-vi">Chào mừng bạn đến với <strong class="font-medium text-secondary">NANSHUO VIỆT NAM</strong> - ngôi nhà chung của các tài năng yêu thích thời trang, sáng tạo và quản lý thương hiệu hàng đầu. Hãy cùng chúng tôi vẽ nên những xu hướng tiêu dùng mới.</span>
+                                    <span class="lang-zh">欢迎来到 <strong class="font-medium text-secondary">南朔（越南）</strong> —— 这里是热爱时尚、创意与顶级 brand 运营管理人才的共同家园。让我们一同携手，引领新一代消费风潮。</span>
+                                </p>
+
+                                <div class="mt-8 sm:mt-10 flex flex-wrap gap-4 justify-center lg:justify-start">
+                                    <a href="#jobs" class="px-8 py-4 border border-transparent text-sm font-bold rounded-lg text-white bg-primary hover:bg-primaryDark md:py-4.5 md:text-base md:px-10 shadow-lg shadow-primary/10 transition-all duration-300 tracking-wider uppercase">
+                                        <span class="lang-vi">Xem Vị Trí Đang Tuyển</span>
+                                        <span class="lang-zh">查看在招岗位</span>
+                                    </a>
+                                    <a href="javascript:void(0)" onclick="navigateTo('about-us')" class="px-8 py-4 border border-gray-200 text-sm font-bold rounded-lg text-gray-700 bg-white hover:bg-gray-50 md:py-4.5 md:text-base md:px-10 transition-all duration-300 tracking-wider uppercase shadow-sm">
+                                        <span class="lang-vi">Khám Phá Công Ty</span>
+                                        <span class="lang-zh">探索我们</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </main>
+                    </div>
+                </div>
+                
+                <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 hidden lg:block p-8">
+                    <div class="h-full w-full relative">
+                        <img class="h-full w-full object-cover rounded-3xl shadow-2xl border-4 border-white" 
+                             src="https://homesland.vn/blog/wp-content/uploads/2019/12/ban-royal-city-ve-dem-1280x720.jpg"
+                             onerror="this.src='https://placehold.co/800x600/1e293b/ffffff?text=Nanshuo+Brand+Management'">
+                        <div class="absolute -bottom-4 -left-4 bg-white p-5 rounded-2xl shadow-xl flex items-center gap-4 border border-gray-100 max-w-xs">
+                            <div class="w-12 h-12 bg-accent/10 text-accent rounded-full flex items-center justify-center text-xl flex-shrink-0">
+                                <i class="fa-solid fa-crown"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400 font-medium tracking-wide uppercase">
+                                    <span class="lang-vi">Tầm Nhìn</span>
+                                    <span class="lang-zh">愿景</span>
+                                </p>
+                                <p class="text-sm font-bold text-secondary">
+                                    <span class="lang-vi">Hàng Đầu Về Quản Lý Thương Hiệu Thời Trang</span>
+                                    <span class="lang-zh">领先的时尚品牌管理运营集团</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION GIỚI THIỆU SƠ LƯỢC -->
+            <section id="about" class="py-20 md:py-28 bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16 md:mb-20">
+                        <h2 class="text-3xl md:text-4xl font-bold text-secondary serif-title">
+                            <span class="lang-vi">Về Nanshuo Việt Nam</span>
+                            <span class="lang-zh">关于南朔（越南）</span>
+                        </h2>
+                        <div class="mt-3 w-16 h-1 bg-primary mx-auto rounded-full"></div>
+                        <p class="mt-4 text-xs text-gray-500 font-medium tracking-widest uppercase">
+                            <span class="lang-vi">CÔNG TY TNHH QUẢN LÝ THƯƠNG HIỆU NANSHUO VIỆT NAM</span>
+                            <span class="lang-zh">南朔（越南）品牌管理有限公司</span>
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+                        <div class="md:col-span-5 relative rounded-2xl overflow-hidden shadow-2xl border border-gray-100">
+                            <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                                 alt="Fashion Brand Display" 
+                                 class="w-full h-[450px] object-cover"
+                                 onerror="this.src='https://placehold.co/600x800/d1d5db/374151?text=Fashion+Management'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-secondary/85 via-secondary/30 to-transparent p-8 flex flex-col justify-end text-white">
+                                <span class="text-primary font-bold text-xs tracking-widest uppercase mb-1">
+                                    <span class="lang-vi">Thời Trang & Phong Cách Sống</span>
+                                    <span class="lang-zh">时尚 & 美学生活</span>
+                                </span>
+                                <p class="serif-title text-2xl font-bold">
+                                    <span class="lang-vi">Chất lượng tạo dựng niềm tin vững bền</span>
+                                    <span class="lang-zh">卓越品质铸就恒久信赖</span>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="md:col-span-7 space-y-6">
+                            <h3 class="text-2xl md:text-3xl font-bold text-secondary serif-title">
+                                <span class="lang-vi">Sứ Mệnh & Trải Nghiệm Khách Hàng</span>
+                                <span class="lang-zh">企业使命 & 客户体验</span>
+                            </h3>
+                            
+                            <p class="text-gray-600 text-base md:text-lg leading-relaxed font-light">
+                                <span class="lang-vi">Được thành lập với định hướng trở thành biểu tượng vận hành chuyên nghiệp, <strong class="font-semibold text-secondary">NANSHUO Việt Nam</strong> sở hữu các chuỗi thương hiệu thời trang thiết kế, phụ kiện và trang phục phái nữ tiên tiến.</span>
+                                <span class="lang-zh">作为一个以“专业运营”为核心导向的卓越代名词，<strong class="font-semibold text-secondary">南朔（越南）</strong> 旗下拥有一系列具有前瞻性设计的女装设计师品牌、潮流配饰以及现代都市女性服饰系列。</span>
+                            </p>
+                            
+                            <p class="text-gray-600 text-base leading-relaxed font-light">
+                                <span class="lang-vi">Chúng tôi đi sâu vào toàn bộ vòng đời sản phẩm: Từ khâu lập kế hoạch ý tưởng, sản xuất, nghiên cứu thị hiếu tiêu dùng, định vị marketing đến thiết lập mạng lưới showroom bán lẻ hiện đại kết hợp thương mại điện tử đa kênh thế hệ mới.</span>
+                                <span class="lang-zh">我们深度整合产品全生命周期：从前期的美学企划、精益生产、消费 market 洞察、精准 brand 定位，到打造结合线上线下（新一代全渠道 ecommerce 与 modern 奢雅零售展厅）的立体销售 network。</span>
+                            </p>
+
+                            <div class="pt-2">
+                                <button onclick="navigateTo('about-us')" class="inline-flex items-center gap-2 px-6 py-3 border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-xl transition-all duration-300 font-bold text-xs uppercase tracking-wider">
+                                    <span class="lang-vi">Khám Phá Chi Tiết Về Chúng Tôi <i class="fa-solid fa-arrow-right ml-1"></i></span>
+                                    <span class="lang-zh">深入探索关于我们 <i class="fa-solid fa-arrow-right ml-1"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="brands" class="py-20 bg-stone-50 border-t border-gray-100">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <div class="text-center mb-16 md:mb-20">
+                        <h2 class="text-3xl md:text-4xl font-bold text-secondary serif-title">
+                            <span class="lang-vi">Hệ Thống Thương Hiệu</span>
+                            <span class="lang-zh">旗下品牌矩阵</span>
+                        </h2>
+                        <div class="mt-3 w-16 h-1 bg-primary mx-auto rounded-full"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                        
+                        <div class="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col text-center group">
+                            <div class="w-full aspect-[3/4] bg-stone-100 flex items-center justify-center overflow-hidden">
+                                <img src="link_anh_warrior.jpg" alt="Warrior" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/400x533/e2e8f0/64748b?text=Warrior'">
+                            </div>
+                            <div class="p-5 flex-grow flex flex-col justify-center">
+                                <h3 class="font-serif text-xl font-bold text-secondary tracking-wider uppercase mb-2">Warrior</h3>
+                                <p class="font-sans text-sm text-gray-500 leading-relaxed font-light">
+                                    <span class="lang-vi">Giày Sneaker trẻ trung và năng động.</span>
+                                    <span class="lang-zh">青春活力的运动运动鞋。</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col text-center group">
+                            <div class="w-full aspect-[3/4] bg-stone-100 flex items-center justify-center overflow-hidden">
+                                <img src="link_anh_yanbaby.jpg" alt="Yanbaby" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/400x533/e2e8f0/64748b?text=Yanbaby'">
+                            </div>
+                            <div class="p-5 flex-grow flex flex-col justify-center">
+                                <h3 class="font-serif text-xl font-bold text-secondary tracking-wider uppercase mb-2">Yanbaby</h3>
+                                <p class="font-sans text-sm text-gray-500 leading-relaxed font-light">
+                                    <span class="lang-vi">Thời trang nữ dịu dàng và trẻ trung.</span>
+                                    <span class="lang-zh">温柔青春的女装系列。</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col text-center group">
+                            <div class="w-full aspect-[3/4] bg-stone-100 flex items-center justify-center overflow-hidden">
+                                <img src="link_anh_mermaid.jpg" alt="Mermaid" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/400x533/e2e8f0/64748b?text=Mermaid'">
+                            </div>
+                            <div class="p-5 flex-grow flex flex-col justify-center">
+                                <h3 class="font-serif text-xl font-bold text-secondary tracking-wider uppercase mb-2">Mermaid</h3>
+                                <p class="font-sans text-sm text-gray-500 leading-relaxed font-light">
+                                    <span class="lang-vi">Thời trang nữ hiện đại và sang trọng.</span>
+                                    <span class="lang-zh">现代优雅的高级女装。</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col text-center group">
+                            <div class="w-full aspect-[3/4] bg-stone-100 flex items-center justify-center overflow-hidden">
+                                <img src="link_anh_gek.jpg" alt="GEK" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/400x533/e2e8f0/64748b?text=GEK'">
+                            </div>
+                            <div class="p-5 flex-grow flex flex-col justify-center">
+                                <h3 class="font-serif text-xl font-bold text-secondary tracking-wider uppercase mb-2">GEK</h3>
+                                <p class="font-sans text-sm text-gray-500 leading-relaxed font-light">
+                                    <span class="lang-vi">Phong cách tinh tế và trẻ trung.</span>
+                                    <span class="lang-zh">精致青春的时尚风格。</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col text-center group">
+                            <div class="w-full aspect-[3/4] bg-stone-100 flex items-center justify-center overflow-hidden">
+                                <img src="link_anh_sanhe.jpg" alt="Sanhe" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/400x533/e2e8f0/64748b?text=Sanhe'">
+                            </div>
+                            <div class="p-5 flex-grow flex flex-col justify-center">
+                                <h3 class="font-serif text-xl font-bold text-secondary tracking-wider uppercase mb-2">Sanhe</h3>
+                                <p class="font-sans text-sm text-gray-500 leading-relaxed font-light">
+                                    <span class="lang-vi">Trang phục mặc nhà chất lượng.</span>
+                                    <span class="lang-zh">高品质家居服饰。</span>
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section class="id-culture py-20 md:py-28 bg-bgLight border-t border-gray-100" id="culture">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16 md:mb-20">
+                        <h2 class="text-3xl md:text-4xl font-bold text-secondary serif-title">
+                            <span class="lang-vi">Giá Trị Cốt Lõi</span>
+                            <span class="lang-zh">企业核心价值</span>
+                        </h2>
+                        <div class="mt-3 w-16 h-1 bg-primary mx-auto rounded-full"></div>
+                        <p class="mt-4 text-gray-500 max-w-2xl mx-auto font-light">
+                            <span class="lang-vi">Tại Nanshuo, chúng tôi cùng nhau xây dựng môi trường sáng tạo, tôn trọng chuyên môn cá nhân và khát khao nâng tầm giá trị thẩm mỹ.</span>
+                            <span class="lang-zh">在南朔，我们并肩构建一个追求极致创意、推崇专业自主，以及永无止境提升生活美学价值的高端平台。</span>
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-white p-8 rounded-2xl border border-gray-100 premium-card">
+                            <div class="w-14 h-14 bg-amber-50 text-primary rounded-2xl flex items-center justify-center text-2xl mb-8 border border-primary/10">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-secondary mb-3">
+                                <span class="lang-vi">Tư Duy Thẩm Mỹ Cao</span>
+                                <span class="lang-zh">高奢艺术美学思维</span>
+                            </h3>
+                            <p class="text-gray-500 text-sm leading-relaxed font-light">
+                                <span class="lang-vi">Chúng tôi tin rằng sự tinh tế thể hiện trong từng tiểu tiết. Mọi nhân viên tại Nanshuo đều được khích lệ rèn luyện khả năng cảm nhận nghệ thuật và cái đẹp để ứng dụng vào công việc hàng ngày.</span>
+                                <span class="lang-zh">我们坚信极致的奢华来源于细节的考究。在南朔，每一位成员都被鼓励并支持不断拓展艺术感知力与潮流触觉，并将美学精髓贯彻于日常点滴工作之中。</span>
+                            </p>
+                        </div>
+                        
+                        <div class="bg-white p-8 rounded-2xl border border-gray-100 premium-card">
+                            <div class="w-14 h-14 bg-emerald-50 text-accent rounded-2xl flex items-center justify-center text-2xl mb-8 border border-accent/10">
+                                <i class="fa-solid fa-users-viewfinder"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-secondary mb-3">
+                                <span class="lang-vi">Chuyên Nghiệp & Khách Quan</span>
+                                <span class="lang-zh">专业精神与客观唯实</span>
+                            </h3>
+                            <p class="text-gray-500 text-sm leading-relaxed font-light">
+                                <span class="lang-vi">Hệ thống làm việc tinh gọn, đo lường rõ ràng và minh bạch. Chúng tôi lắng nghe ý kiến của mọi cộng sự, lấy trải nghiệm khách hàng và tính phát triển bền vững làm định hướng quyết sách.</span>
+                                <span class="lang-zh">推行精益化、高透明、可量化的先进工作机制。我们积极倾听每一位事业伙伴的真知灼见，以无可挑剔的客户体验与可持续增长作为企业决策的核心基石。</span>
+                            </p>
+                        </div>
+
+                        <div class="bg-white p-8 rounded-2xl border border-gray-100 premium-card">
+                            <div class="w-14 h-14 bg-red-50 text-red-700 rounded-2xl flex items-center justify-center text-2xl mb-8 border border-red-100">
+                                <i class="fa-solid fa-seedling"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-secondary mb-3">
+                                <span class="lang-vi">Phát Triển Không Giới Hạn</span>
+                                <span class="lang-zh">卓越成长无界限</span>
+                            </h3>
+                            <p class="text-gray-500 text-sm leading-relaxed font-light">
+                                <span class="lang-vi">Chúng tôi dành nhiều cơ hội cho người trẻ dám dấn thân và không ngại học hỏi các quy trình vận hành chuỗi thương mại đỉnh cao. Lộ trình phát triển được cá nhân hóa cho từng tài năng.</span>
+                                <span class="lang-zh">我们为极具野心、无畏挑战的优秀青年人才提供绝佳的行业高阶实践机会。在这里，针对每一位耀眼明珠都定制有专属的职业快速跃升路线图。</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="id-benefits py-20 md:py-28 bg-white" id="benefits">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16 md:mb-20">
+                        <h2 class="text-3xl md:text-4xl font-bold text-secondary serif-title">
+                            <span class="lang-vi">Chính Sách & Phúc Lợi</span>
+                            <span class="lang-zh">优厚福利政策</span>
+                        </h2>
+                        <div class="mt-3 w-16 h-1 bg-primary mx-auto rounded-full"></div>
+                        <p class="mt-4 text-gray-500 max-w-2xl mx-auto font-light">
+                            <span class="lang-vi">Hậu phương vững chắc tạo nên sự thăng hoa trong công việc của từng cá nhân.</span>
+                            <span class="lang-zh">全方位的关怀保障，为每位同仁的才华绽放构筑最坚实的后盾。</span>
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="flex flex-col p-6 bg-bgLight rounded-2xl border border-gray-100 transition-all duration-300 hover:bg-white hover:shadow-lg">
+                            <div class="w-12 h-12 bg-white text-primary rounded-xl flex items-center justify-center text-xl mb-5 shadow-sm border border-gray-100">
+                                <i class="fa-solid fa-sack-dollar"></i>
+                            </div>
+                            <h4 class="text-base font-bold text-secondary mb-2">
+                                <span class="lang-vi">Thu Nhập Xứng Đáng</span>
+                                <span class="lang-zh">竞争性薪酬</span>
+                            </h4>
+                            <p class="text-gray-500 text-xs leading-relaxed font-light">
+                                <span class="lang-vi">Lương cơ bản cạnh tranh cùng doanh số thưởng năng động theo sự thăng tiến của các thương hiệu trực thuộc.</span>
+                                <span class="lang-zh">高竞争力基本薪资配合丰厚的业务绩效提成，让每一次品牌跃升都转化为实实在在的物质回报。</span>
+                            </p>
+                        </div>
+
+                        <div class="flex flex-col p-6 bg-bgLight rounded-2xl border border-gray-100 transition-all duration-300 hover:bg-white hover:shadow-lg">
+                            <div class="w-12 h-12 bg-white text-accent rounded-xl flex items-center justify-center text-xl mb-5 shadow-sm border border-gray-100">
+                                <i class="fa-solid fa-gift"></i>
+                            </div>
+                            <h4 class="text-base font-bold text-secondary mb-2">
+                                <span class="lang-vi">Đặc Quyền Thời Trang</span>
+                                <span class="lang-zh">时尚先锋特权</span>
+                            </h4>
+                            <p class="text-gray-500 text-xs leading-relaxed font-light">
+                                <span class="lang-vi">Mã giảm giá nội bộ (Staff discount) cực kỳ ưu đãi khi mua sắm các thương hiệu thời trang mà công ty quản lý.</span>
+                                <span class="lang-zh">专属于南朔内部同仁的超低员工折扣，轻松体验集团旗下高端前沿时尚美物。</span>
+                            </p>
+                        </div>
+
+                        <div class="flex flex-col p-6 bg-bgLight rounded-2xl border border-gray-100 transition-all duration-300 hover:bg-white hover:shadow-lg">
+                            <div class="w-12 h-12 bg-white text-blue-500 rounded-xl flex items-center justify-center text-xl mb-5 shadow-sm border border-gray-100">
+                                <i class="fa-solid fa-user-shield"></i>
+                            </div>
+                            <h4 class="text-base font-bold text-secondary mb-2">
+                                <span class="lang-vi">Bảo Hiểm & Sức Khỏe</span>
+                                <span class="lang-zh">健康保障计划</span>
+                            </h4>
+                            <p class="text-gray-500 text-xs leading-relaxed font-light">
+                                <span class="lang-vi">Đóng BHXH đầy đủ theo Luật Lao Động, khám sức khỏe định kỳ và hưởng chế độ hiếu hỷ ấm áp.</span>
+                                <span class="lang-zh">严格依法足额缴纳社会保险，并额外提供全员年度深度健康体检以及温暖如家的红白慰问。</span>
+                            </p>
+                        </div>
+
+                        <div class="flex flex-col p-6 bg-bgLight rounded-2xl border border-gray-100 transition-all duration-300 hover:bg-white hover:shadow-lg">
+                            <div class="w-12 h-12 bg-white text-yellow-600 rounded-xl flex items-center justify-center text-xl mb-5 shadow-sm border border-gray-100">
+                                <i class="fa-solid fa-umbrella-beach"></i>
+                            </div>
+                            <h4 class="text-base font-bold text-secondary mb-2">
+                                <span class="lang-vi">Team Building & Du Lịch</span>
+                                <span class="lang-zh">精彩团建与旅游</span>
+                            </h4>
+                            <p class="text-gray-500 text-xs leading-relaxed font-light">
+                                <span class="lang-vi">Tham gia các chuyến đi kết nối toàn công ty hàng năm và các buổi dã ngoại sáng tạo theo từng phòng ban.</span>
+                                <span class="lang-zh">年度豪华全员出游、跨地区文化体验以及极具创意的部门微度假活动。</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="id-jobs py-20 md:py-28 bg-bgLight border-t border-gray-100" id="jobs">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
+                        <div>
+                            <h2 class="text-3xl md:text-4xl font-bold text-secondary serif-title">
+                                <span class="lang-vi">Cơ Hội Nghề Nghiệp</span>
+                                <span class="lang-zh">招募黄金岗位</span>
+                            </h2>
+                            <div class="mt-3 w-16 h-1 bg-primary rounded-full"></div>
+                            <p class="mt-4 text-gray-500 font-light text-sm">
+                                <span class="lang-vi">Gia nhập đội ngũ Nanshuo Việt Nam để thăng hoa cùng đam mê.</span>
+                                <span class="lang-zh">加入南朔越南，携手卓越，让热爱在此精彩绽放。</span>
+                            </p>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-2 bg-white p-1.5 rounded-xl border border-gray-200/60 shadow-sm w-full md:w-auto">
+                            <button onclick="filterJobs('all')" id="btn-all" class="filter-btn px-4 py-2.5 text-xs font-bold tracking-wider uppercase rounded-lg bg-primary text-white transition-all">
+                                <span class="lang-vi">Tất cả</span>
+                                <span class="lang-zh">全部岗位</span>
+                            </button>
+                            <button onclick="filterJobs('marketing')" id="btn-marketing" class="filter-btn px-4 py-2.5 text-xs font-bold tracking-wider uppercase rounded-lg text-gray-500 hover:bg-gray-50 transition-all">
+                                <span class="lang-vi">Marketing & Brand</span>
+                                <span class="lang-zh">市场与品牌</span>
+                            </button>
+                            <button onclick="filterJobs('design')" id="btn-design" class="filter-btn px-4 py-2.5 text-xs font-bold tracking-wider uppercase rounded-lg text-gray-500 hover:bg-gray-50 transition-all">
+                                <span class="lang-vi">Thiết kế & Sáng tạo</span>
+                                <span class="lang-zh">平面设计与视觉</span>
+                            </button>
+                            <button onclick="filterJobs('ops')" id="btn-ops" class="filter-btn px-4 py-2.5 text-xs font-bold tracking-wider uppercase rounded-lg text-gray-500 hover:bg-gray-50 transition-all">
+                                <span class="lang-vi">Vận hành bán lẻ</span>
+                                <span class="lang-zh">零售门店运营</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="job-list" class="grid grid-cols-1 gap-6">
+                        
+                        <div class="job-item bg-white rounded-2xl p-6 md:p-8 border border-gray-100 shadow-sm transition-all duration-300 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between premium-card" data-category="marketing">
+                            <div class="flex gap-6 items-start">
+                                <div class="w-14 h-14 bg-amber-50 text-primary rounded-xl flex items-center justify-center text-2xl flex-shrink-0 border border-primary/15">
+                                    <i class="fa-solid fa-award"></i>
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2 mb-1.5">
+                                        <h3 class="text-lg font-bold text-secondary hover:text-primary cursor-pointer transition-colors">
+                                            <span class="lang-vi">Fashion Brand Manager (Quản Lý Thương Hiệu)</span>
+                                            <span class="lang-zh">时尚品牌经理 (Fashion Brand Manager)</span>
+                                        </h3>
+                                        <span class="bg-primary/10 text-primary text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Hot</span>
+                                    </div>
+                                    <div class="flex flex-wrap gap-4 text-xs text-gray-400 mb-3 font-medium">
+                                        <span class="flex items-center gap-1.5">
+                                            <i class="fa-solid fa-location-dot text-primary"></i> 
+                                            <span class="lang-vi">Quận Hoàng Mai, Hà Nội</span>
+                                            <span class="lang-zh">越南河内市黄梅区</span>
+                                        </span>
+                                        <span class="flex items-center gap-1.5">
+                                            <i class="fa-solid fa-briefcase text-primary"></i> 
+                                            <span class="lang-vi">Toàn thời gian</span>
+                                            <span class="lang-zh">全职</span>
+                                        </span>
+                                        <span class="flex items-center gap-1.5">
+                                            <i class="fa-solid fa-money-bill-wave text-accent"></i> 
+                                            <span class="lang-vi">Thỏa thuận (Cạnh tranh)</span>
+                                            <span class="lang-zh">面议 (极具竞争力)</span>
+                                        </span>
+                                    </div>
+                                    <p class="text-gray-500 text-sm leading-relaxed font-light line-clamp-2 max-w-3xl">
+                                        <span class="lang-vi">Định hướng chiến lược, quản trị hình ảnh và lập kế hoạch phát triển các nhãn hàng thời trang nữ. Phối hợp với nhóm Sản xuất và Sáng tạo để tung các bộ sưu tập theo mùa.</span>
+                                        <span class="lang-zh">负责旗下高端女装品牌的战略定位、形象管理与 market 拓展。协同生产与创意设计团队，主导按季推新并引爆 market。</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex flex-row md:flex-col gap-3 w-full md:w-auto flex-shrink-0 mt-4 md:mt-0">
+                                <button onclick="openApplyModal('Fashion Brand Manager')" class="flex-1 md:flex-none px-6 py-3 bg-secondary text-white font-bold text-xs tracking-wider uppercase rounded-xl hover:bg-primary transition-all duration-300 shadow-sm">
+                                    <span class="lang-vi">Ứng tuyển</span>
+                                    <span class="lang-zh">申请职位</span>
+                                </button>
+                                <button onclick="openDetailModal('fbm-detail')" class="flex-1 md:flex-none px-6 py-3 border border-gray-200 text-gray-700 font-bold text-xs tracking-wider uppercase rounded-xl hover:bg-gray-50 transition-all duration-300">
+                                    <span class="lang-vi">Chi tiết</span>
+                                    <span class="lang-zh">职位详情</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="job-item bg-white rounded-2xl p-6 md:p-8 border border-gray-100 shadow-sm transition-all duration-300 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between premium-card" data-category="design">
+                            <div class="flex gap-6 items-start">
+                                <div class="w-14 h-14 bg-emerald-50 text-accent rounded-xl flex items-center justify-center text-2xl flex-shrink-0 border border-accent/15">
+                                    <i class="fa-solid fa-palette"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-secondary mb-1.5 hover:text-primary cursor-pointer transition-colors">
+                                        <span class="lang-vi">Graphic Designer (Thời trang & Social Campaign)</span>
+                                        <span class="lang-zh">平面/视觉设计师 (Graphic Designer)</span>
+                                    </h3>
+                                    <div class="flex flex-wrap gap-4 text-xs text-gray-400 mb-3 font-medium">
+                                        <span class="flex items-center gap-1.5">
+                                            <i class="fa-solid fa-location-dot text-primary"></i> 
+                                            <span class="lang-vi">Quận Hoàng Mai, Hà Nội</span>
+                                            <span class="lang-zh">越南河内市黄梅区</span>
+                                        </span>
+                                        <span class="flex items-center gap-1.5">
+                                            <i class="fa-solid fa-briefcase text-primary"></i> 
+                                            <span class="lang-vi">Toàn thời gian</span>
+                                            <span class="lang-zh">全职</span>
+                                        </span>
+                                        <span class="flex items-center gap-1.5">
+                                            <i class="fa-solid fa-money-bill-wave text-accent"></i> 
+                                            <span class="lang-vi">15M - 22M VNĐ</span>
+                                            <span class="lang-zh">1500万 - 2200万 越南盾</span>
+                                        </span>
+                                    </div>
+                                    <p class="text-gray-500 text-sm leading-relaxed font-light line-clamp-2 max-w-3xl">
+                                        <span class="lang-vi">Thiết kế ấn phẩm tiếp thị số, hình ảnh chiến dịch trên Facebook/TikTok/Instagram. Đóng góp ý tưởng concept photoshoot và thiết kế hệ thống nhận diện tại điểm bán (POSM).</span>
+                                        <span class="lang-zh">负责社交媒体推广矩阵的创意设计工作。主导拍摄企划概念设计，并执行品牌线下精品店的空间与物料视觉系统（POSM）。</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex flex-row md:flex-col gap-3 w-full md:w-auto flex-shrink-0 mt-4 md:mt-0">
+                                <button onclick="openApplyModal('Graphic Designer')" class="flex-1 md:flex-none px-6 py-3 bg-secondary text-white font-bold text-xs tracking-wider uppercase rounded-xl hover:bg-primary transition-all duration-300 shadow-sm">
+                                    <span class="lang-vi">Ứng tuyển</span>
+                                    <span class="lang-zh">申请职位</span>
+                                </button>
+                                <button onclick="openDetailModal('gd-detail')" class="flex-1 md:flex-none px-6 py-3 border border-gray-200 text-gray-700 font-bold text-xs tracking-wider uppercase rounded-xl hover:bg-gray-50 transition-all duration-300">
+                                    <span class="lang-vi">Chi tiết</span>
+                                    <span class="lang-zh">职位详情</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="job-item bg-white rounded-2xl p-6 md:p-8 border border-gray-100 shadow-sm transition-all duration-300 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between premium-card" data-category="ops">
+                            <div class="flex gap-6 items-start">
+                                <div class="w-14 h-14 bg-amber-50 text-primary rounded-xl flex items-center justify-center text-2xl flex-shrink-0 border border-primary/15">
+                                    <i class="fa-solid fa-store"></i>
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2 mb-1.5">
+                                        <h3 class="text-lg font-bold text-secondary hover:text-primary cursor-pointer transition-colors">
+                                            <span class="lang-vi">Quản Lý Cửa Hàng Bán Lẻ (Store Manager)</span>
+                                            <span class="lang-zh">零售店铺经理 (Store Manager)</span>
+                                        </h3>
+                                        <span class="bg-accent/10 text-accent text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Mới</span>
+                                    </div>
+                                    <div class="flex flex-wrap gap-4 text-xs text-gray-400 mb-3 font-medium">
+                                        <span class="flex items-center gap-1.5">
+                                            <i class="fa-solid fa-location-dot text-primary"></i> 
+                                            <span class="lang-vi">Hà Nội (Showrooms)</span>
+                                            <span class="lang-zh">越南河内市（各线下门店）</span>
+                                        </span>
+                                        <span class="flex items-center gap-1.5">
+                                            <i class="fa-solid fa-briefcase text-primary"></i> 
+                                            <span class="lang-vi">Toàn thời gian</span>
+                                            <span class="lang-zh">全职</span>
+                                        </span>
+                                        <span class="flex items-center gap-1.5">
+                                            <i class="fa-solid fa-money-bill-wave text-accent"></i> 
+                                            <span class="lang-vi">18M - 25M VNĐ + Thưởng KPI</span>
+                                            <span class="lang-zh">1800万 - 2500万 越南盾 + 绩效</span>
+                                        </span>
+                                    </div>
+                                    <p class="text-gray-500 text-sm leading-relaxed font-light line-clamp-2 max-w-3xl">
+                                        <span class="lang-vi">Quản lý vận hành showroom thời trang, đào tạo đội ngũ nhân viên tư vấn bán hàng chuyên nghiệp, bảo đảm tiêu chuẩn bài trí hình ảnh Visual Merchandising và tối ưu doanh số.</span>
+                                        <span class="lang-zh">负责线下时尚旗舰店的日常营运。对销售顾问团队实施专业培训，贯彻视觉陈列（VM）标准，全面释放店面业绩潜力。</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex flex-row md:flex-col gap-3 w-full md:w-auto flex-shrink-0 mt-4 md:mt-0">
+                                <button onclick="openApplyModal('Store Manager')" class="flex-1 md:flex-none px-6 py-3 bg-secondary text-white font-bold text-xs tracking-wider uppercase rounded-xl hover:bg-primary transition-all duration-300 shadow-sm">
+                                    <span class="lang-vi">Ứng tuyển</span>
+                                    <span class="lang-zh">申请职位</span>
+                                </button>
+                                <button onclick="openDetailModal('sm-detail')" class="flex-1 md:flex-none px-6 py-3 border border-gray-200 text-gray-700 font-bold text-xs tracking-wider uppercase rounded-xl hover:bg-gray-50 transition-all duration-300">
+                                    <span class="lang-vi">Chi tiết</span>
+                                    <span class="lang-zh">职位详情</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="job-item bg-white rounded-2xl p-6 md:p-8 border border-gray-100 shadow-sm transition-all duration-300 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between premium-card" data-category="marketing">
+                            <div class="flex gap-6 items-start">
+                                <div class="w-14 h-14 bg-red-50 text-red-700 rounded-xl flex items-center justify-center text-2xl flex-shrink-0 border border-red-100">
+                                    <i class="fa-solid fa-pen-fancy"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-secondary mb-1.5 hover:text-primary cursor-pointer transition-colors">
+                                        <span class="lang-vi">Chuyên Viên Content Marketing (Fashion & Lifestyle)</span>
+                                        <span class="lang-zh">时尚内容营销专员 (Content Marketing)</span>
+                                    </h3>
+                                    <div class="flex flex-wrap gap-4 text-xs text-gray-400 mb-3 font-medium">
+                                        <span class="flex items-center gap-1.5">
+                                            <i class="fa-solid fa-location-dot text-primary"></i> 
+                                            <span class="lang-vi">Quận Hoàng Mai, Hà Nội</span>
+                                            <span class="lang-zh">越南河内市黄梅区</span>
+                                        </span>
+                                        <span class="flex items-center gap-1.5">
+                                            <i class="fa-solid fa-briefcase text-primary"></i> 
+                                            <span class="lang-vi">Toàn thời gian</span>
+                                            <span class="lang-zh">全职</span>
+                                        </span>
+                                        <span class="flex items-center gap-1.5">
+                                            <i class="fa-solid fa-money-bill-wave text-accent"></i> 
+                                            <span class="lang-vi">12M - 18M VNĐ</span>
+                                            <span class="lang-zh">1200万 - 1800万 越南盾</span>
+                                        </span>
+                                    </div>
+                                    <p class="text-gray-500 text-sm leading-relaxed font-light line-clamp-2 max-w-3xl">
+                                        <span class="lang-vi">Chịu trách nhiệm sáng tạo nội dung văn bản, kịch bản video ngắn xu hướng (TikTok, Reels) và các bài viết quảng bá thương hiệu thời trang độc quyền.</span>
+                                        <span class="lang-zh">负责独家女装品牌的内容生态建设。主导撰写潮流推文、小红书式种草文案以及抖音/TikTok短视频创意脚本。</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex flex-row md:flex-col gap-3 w-full md:w-auto flex-shrink-0 mt-4 md:mt-0">
+                                <button onclick="openApplyModal('Content Marketing Specialist')" class="flex-1 md:flex-none px-6 py-3 bg-secondary text-white font-bold text-xs tracking-wider uppercase rounded-xl hover:bg-primary transition-all duration-300 shadow-sm">
+                                    <span class="lang-vi">Ứng tuyển</span>
+                                    <span class="lang-zh">申请职位</span>
+                                </button>
+                                <button onclick="openDetailModal('cm-detail')" class="flex-1 md:flex-none px-6 py-3 border border-gray-200 text-gray-700 font-bold text-xs tracking-wider uppercase rounded-xl hover:bg-gray-50 transition-all duration-300">
+                                    <span class="lang-vi">Chi tiết</span>
+                                    <span class="lang-zh">职位详情</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="job-item bg-white rounded-2xl p-6 md:p-8 border border-gray-100 shadow-sm transition-all duration-300 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between premium-card" data-category="ops">
+                            <div class="flex gap-6 items-start">
+                                <div class="w-14 h-14 bg-emerald-50 text-accent rounded-xl flex items-center justify-center text-2xl flex-shrink-0 border border-accent/15">
+                                    <i class="fa-solid fa-shirt"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-secondary mb-1.5 hover:text-primary cursor-pointer transition-colors">
+                                        <span class="lang-vi">Nhân Viên Tư Vấn Bán Hàng Thời Trang (Full-time / Part-time)</span>
+                                        <span class="lang-zh">精品店时尚顾问 / 销售顾问 (SA)</span>
+                                    </h3>
+                                    <div class="flex flex-wrap gap-4 text-xs text-gray-400 mb-3 font-medium">
+                                        <span class="flex items-center gap-1.5">
+                                            <i class="fa-solid fa-location-dot text-primary"></i> 
+                                            <span class="lang-vi">Hà Nội (Nhiều showroom)</span>
+                                            <span class="lang-zh">越南河内市（各门店）</span>
+                                        </span>
+                                        <span class="flex items-center gap-1.5">
+                                            <i class="fa-solid fa-clock text-primary"></i> 
+                                            <span class="lang-vi">Linh hoạt ca xoay</span>
+                                            <span class="lang-zh">灵活排班（全职/兼职）</span>
+                                        </span>
+                                        <span class="flex items-center gap-1.5">
+                                            <i class="fa-solid fa-money-bill-wave text-accent"></i> 
+                                            <span class="lang-vi">8M - 12M VNĐ + Doanh số</span>
+                                            <span class="lang-zh">800万 - 1200万 越南盾 + 提成</span>
+                                        </span>
+                                    </div>
+                                    <p class="text-gray-500 text-sm leading-relaxed font-light line-clamp-2 max-w-3xl">
+                                        <span class="lang-vi">Đón tiếp và tư vấn phối đồ (mix & match) cho khách hàng tại cửa hàng, duy trì hình ảnh quầy kệ gọn gàng, hỗ trợ kiểm kê kho và thanh toán nhanh chóng.</span>
+                                        <span class="lang-zh">热情迎宾，根据顾客特质提供高级感十足的穿搭解决方案（Mix & Match）。维护精品店陈列美观度，协助货品盘点及快速收银。</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex flex-row md:flex-col gap-3 w-full md:w-auto flex-shrink-0 mt-4 md:mt-0">
+                                <button onclick="openApplyModal('Sales Associate')" class="flex-1 md:flex-none px-6 py-3 bg-secondary text-white font-bold text-xs tracking-wider uppercase rounded-xl hover:bg-primary transition-all duration-300 shadow-sm">
+                                    <span class="lang-vi">Ứng tuyển</span>
+                                    <span class="lang-zh">申请职位</span>
+                                </button>
+                                <button onclick="openDetailModal('sa-detail')" class="flex-1 md:flex-none px-6 py-3 border border-gray-200 text-gray-700 font-bold text-xs tracking-wider uppercase rounded-xl hover:bg-gray-50 transition-all duration-300">
+                                    <span class="lang-vi">Chi tiết</span>
+                                    <span class="lang-zh">职位详情</span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- ================= VIEW 2: TRANG CHI TIẾT "VỀ CHÚNG TÔI" (MỚI) ================= -->
+        <div id="view-about-us" class="view-panel hidden transition-all duration-500">
+            <!-- Hero của Trang Giới Thiệu -->
+            <section class="relative bg-secondary text-white py-24 md:py-32 overflow-hidden luxury-pattern border-b border-primary/20">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                    <span class="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-semibold tracking-widest uppercase mb-6">
+                        <i class="fa-solid fa-feather-pointed"></i>
+                        <span class="lang-vi">Hành Trình Thương Hiệu Nanshuo</span>
+                        <span class="lang-zh">南朔品牌发展叙事</span>
+                    </span>
+                    <h1 class="text-4xl md:text-6xl font-bold serif-title leading-tight mb-6">
+                        <span class="lang-vi text-white">Nơi Tôn Vinh <span class="text-primary">Vẻ Đẹp Á Đông</span></span>
+                        <span class="lang-zh text-white">致敬东方美学与现代风尚</span>
+                    </h1>
+                    <p class="max-w-3xl mx-auto text-gray-400 text-base md:text-lg font-light leading-relaxed">
+                        <span class="lang-vi">Chúng tôi không chỉ quản lý thương hiệu thời trang; chúng tôi đang lưu giữ và định hình phong cách sống của thời đại mới thông qua tư duy thiết kế duy mỹ, thanh lịch và trường tồn.</span>
+                        <span class="lang-zh">我们不仅仅在进行服装品牌的管理与企划，我们更是在通过极致、雅致且恒久的设计思维，去定义并引领属于新时代的时尚美学生活。</span>
+                    </p>
+                </div>
+                <div class="absolute w-80 h-80 rounded-full bg-primary/5 -top-10 -left-10 blur-3xl"></div>
+                <div class="absolute w-96 h-96 rounded-full bg-accent/5 -bottom-20 -right-10 blur-3xl"></div>
+            </section>
+
+            <section class="py-20 bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                        <div class="space-y-6">
+                            <h2 class="text-3xl md:text-4xl font-bold text-secondary serif-title">
+                                <span class="lang-vi">Hệ Sinh Thái Thời Trang Bán Lẻ Hoàn Hảo</span>
+                                <span class="lang-zh">全链路立体化零售生态系统</span>
+                            </h2>
+                            <div class="w-12 h-1 bg-primary rounded-full"></div>
+                            <p class="text-gray-600 font-light leading-relaxed">
+                                <span class="lang-vi">NANSHUO Việt Nam không ngừng đổi mới để bao phủ toàn vẹn các lĩnh vực cốt lõi của ngành công nghiệp thời trang hiện đại. Từ quy trình nghiên cứu chất liệu vải thân thiện với môi trường, đội ngũ phát triển sản phẩm chuyên sâu, đến các chiến dịch marketing độc bản và chuỗi showroom điểm bán hiện đại mang đậm chiều sâu cảm xúc.</span>
+                                <span class="lang-zh">南朔（越南）不断创新，以完美覆盖现代时装零售业的核心环节。从环保科技面料研发、资深商品美学企划、独具匠心的品牌数字营销策略，到散发着高品位空间美学的直营精品大店展厅。</span>
+                            </p>
+                            <p class="text-gray-600 font-light leading-relaxed">
+                                <span class="lang-vi">Trái tim của chúng tôi luôn đập cùng nhịp với khách hàng. Mọi thiết kế hay quy trình vận hành đều hướng tới sứ mệnh duy nhất: Đem lại sự tự tin, thời thượng và trải nghiệm nghệ thuật xuất sắc cho người mặc.</span>
+                                <span class="lang-zh">南朔的心脏始终与市场客群同频共振。我们的一纸设计、一次服务流程的迭代都直指终极追求：为尊贵的穿着者带来优雅、自信、领先时代的非凡艺术级穿着体验。</span>
+                            </p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-4">
+                                <img class="rounded-2xl object-cover h-64 w-full shadow-md hover:scale-[1.02] transition-transform duration-300" src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Work space" onerror="this.src='https://placehold.co/300x400/ccc/333?text=Design'">
+                                <img class="rounded-2xl object-cover h-48 w-full shadow-md hover:scale-[1.02] transition-transform duration-300" src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Showroom" onerror="this.src='https://placehold.co/300x300/ccc/333?text=Boutique'">
+                            </div>
+                            <div class="space-y-4 pt-8">
+                                <img class="rounded-2xl object-cover h-48 w-full shadow-md hover:scale-[1.02] transition-transform duration-300" src="https://images.unsplash.com/photo-1509631179647-0177331693ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Clothing details" onerror="this.src='https://placehold.co/300x300/ccc/333?text=Detail'">
+                                <img class="rounded-2xl object-cover h-64 w-full shadow-md hover:scale-[1.02] transition-transform duration-300" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Fashion photoshoot" onerror="this.src='https://placehold.co/300x400/ccc/333?text=Fashion'">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-20 bg-bgLight">
+                <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl md:text-4xl font-bold text-secondary serif-title">
+                            <span class="lang-vi">Cột Mốc Phát Triển</span>
+                            <span class="lang-zh">品牌编年史</span>
+                        </h2>
+                        <div class="mt-3 w-12 h-1 bg-primary mx-auto rounded-full"></div>
+                    </div>
+
+                    <div class="relative border-l border-primary/30 ml-4 md:ml-32 space-y-12">
+                        <div class="relative pl-8 md:pl-12">
+                            <div class="absolute -left-3.5 top-1.5 w-7 h-7 bg-white border-4 border-primary rounded-full flex items-center justify-center">
+                                <div class="w-1.5 h-1.5 bg-primary rounded-full"></div>
+                            </div>
+                            <span class="text-xs font-bold text-primary tracking-wider uppercase">2021</span>
+                            <h3 class="text-xl font-bold text-secondary mt-1 serif-title">
+                                <span class="lang-vi">Khởi đầu hành trình & Thành lập</span>
+                                <span class="lang-zh">扬帆启航 & 公司创立</span>
+                            </h3>
+                            <p class="text-gray-500 font-light mt-2 text-sm leading-relaxed max-w-2xl">
+                                <span class="lang-vi">Công ty chính thức gia nhập thị trường thời trang Việt Nam với văn phòng đại diện đầu tiên, hướng tới định vị phân khúc thiết kế thanh lịch độc bản.</span>
+                                <span class="lang-zh">在河内设立首个 brand 办事处，正式进入越南高端服装设计赛道，开辟独特的极简优雅美学分支。</span>
+                            </p>
+                        </div>
+                        <div class="relative pl-8 md:pl-12">
+                            <div class="absolute -left-3.5 top-1.5 w-7 h-7 bg-white border-4 border-accent rounded-full flex items-center justify-center">
+                                <div class="w-1.5 h-1.5 bg-accent rounded-full"></div>
+                            </div>
+                            <span class="text-xs font-bold text-accent tracking-wider uppercase">2023</span>
+                            <h3 class="text-xl font-bold text-secondary mt-1 serif-title">
+                                <span class="lang-vi">Đạt mốc 10 Showroom Toàn quốc</span>
+                                <span class="lang-zh">布局线下 · 突破10家旗舰店</span>
+                            </h3>
+                            <p class="text-gray-500 font-light mt-2 text-sm leading-relaxed max-w-2xl">
+                                <span class="lang-vi">Mở rộng thần tốc mạng lưới điểm bán trực tiếp tại các trung tâm thương mại lớn, kiến tạo chuẩn mực không gian trải nghiệm cao cấp cho khách hàng.</span>
+                                <span class="lang-zh">线下精品零售网络迅速铺开，进驻各大城市主流商业圈与高档百货，首创艺术级沉浸式购物沙龙体验。</span>
+                            </p>
+                        </div>
+                        <div class="relative pl-8 md:pl-12">
+                            <div class="absolute -left-3.5 top-1.5 w-7 h-7 bg-white border-4 border-primary rounded-full flex items-center justify-center">
+                                <div class="w-1.5 h-1.5 bg-primary rounded-full"></div>
+                            </div>
+                            <span class="text-xs font-bold text-primary tracking-wider uppercase">2025 - 2026</span>
+                            <h3 class="text-xl font-bold text-secondary mt-1 serif-title">
+                                <span class="lang-vi">Quốc tế hóa & Đa kênh số</span>
+                                <span class="lang-zh">全渠道数字化 & 迈向国际化</span>
+                            </h3>
+                            <p class="text-gray-500 font-light mt-2 text-sm leading-relaxed max-w-2xl">
+                                <span class="lang-vi">Số hóa quy trình vận hành, nâng tầm trải nghiệm cá nhân hóa đa kênh số và định hướng vươn tầm các thị trường khu vực lân cận.</span>
+                                <span class="lang-zh">打通线上全渠道 ecommerce 矩阵与线下实体系统的智能交融，完成多维度 brand 矩阵重组，开启出海及区域市场战略布局。</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-20 bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl md:text-4xl font-bold text-secondary serif-title">
+                            <span class="lang-vi">Không Gian Đầy Đam Mê Của Chúng Tôi</span>
+                            <span class="lang-zh">南朔美学生活空间 · 影像志</span>
+                        </h2>
+                        <div class="mt-3 w-12 h-1 bg-primary mx-auto rounded-full"></div>
+                        <p class="mt-4 text-gray-500 max-w-2xl mx-auto font-light text-sm">
+                            <span class="lang-vi">Chào mừng bạn ghé thăm văn phòng, nhà xưởng sáng tạo và các boutique mang đậm dấu ấn phong cách Nanshuo. Bạn có thể dễ dàng thay đổi các hình ảnh này bằng link ảnh thật của công ty bạn.</span>
+                            <span class="lang-zh">欢迎来到南朔的工作日常。以下展示了我们独具匠心的创意工作室、现代化板房以及美学概念店，您可随时在源码中将其替换为公司的真实影像。</span>
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="group relative overflow-hidden rounded-2xl shadow-sm bg-gray-100 h-80">
+                            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                                 alt="Văn phòng sáng tạo Nanshuo"
+                                 onerror="this.src='https://placehold.co/600x600/b29267/fff?text=Nanshuo+Office'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-secondary/80 via-secondary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 text-white">
+                                <h4 class="font-bold text-lg">Creative Office Workspace</h4>
+                                <p class="text-xs text-primary font-medium tracking-wide mt-1 uppercase lang-vi">Văn phòng làm việc đầy cảm hứng</p>
+                                <p class="text-xs text-primary font-medium tracking-wide mt-1 uppercase lang-zh">激发灵感的创意办公区</p>
+                            </div>
+                        </div>
+                        <div class="group relative overflow-hidden rounded-2xl shadow-sm bg-gray-100 h-80">
+                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                                 alt="Họp thảo luận sáng tạo"
+                                 onerror="this.src='https://placehold.co/600x600/0f5a47/fff?text=Creative+Team'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-secondary/80 via-secondary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 text-white">
+                                <h4 class="font-bold text-lg">Creative Discussion</h4>
+                                <p class="text-xs text-primary font-medium tracking-wide mt-1 uppercase lang-vi">Cùng nhau kiến tạo xu hướng</p>
+                                <p class="text-xs text-primary font-medium tracking-wide mt-1 uppercase lang-zh">协同定义下一代风尚</p>
+                            </div>
+                        </div>
+                        <div class="group relative overflow-hidden rounded-2xl shadow-sm bg-gray-100 h-80">
+                            <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80" 
+                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                                 alt="Showroom Nanshuo"
+                                 onerror="this.src='https://placehold.co/600x600/111827/fff?text=Retail+Store'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-secondary/80 via-secondary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 text-white">
+                                <h4 class="font-bold text-lg">Concept Boutique</h4>
+                                <p class="text-xs text-primary font-medium tracking-wide mt-1 uppercase lang-vi">Không gian trưng bày xa xỉ</p>
+                                <p class="text-xs text-primary font-medium tracking-wide mt-1 uppercase lang-zh">沉浸式美学零售精品店</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-16 bg-secondary text-white text-center border-t border-primary/20">
+                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h3 class="text-2xl md:text-3xl font-bold serif-title mb-4">
+                        <span class="lang-vi">Viết Tiếp Câu Chuyện Của Bạn Cùng Nanshuo</span>
+                        <span class="lang-zh">在南朔，续写您灿烂的职业华章</span>
+                    </h3>
+                    <p class="text-gray-400 text-sm font-light mb-8 max-w-xl mx-auto">
+                        <span class="lang-vi">Bạn đã sẵn sàng để thử thách bản thân trong môi trường thời trang đẳng cấp quốc tế? Đừng ngần ngại nộp hồ sơ gia nhập cùng chúng tôi.</span>
+                        <span class="lang-zh">您准备好在这场通往极致美学与顶级商业的远征中施展抱负了吗？现在就开启属于您的闪耀之旅。</span>
+                    </p>
+                    <button onclick="navigateTo('recruitment', '#jobs')" class="px-8 py-4 bg-primary hover:bg-primaryDark text-white font-bold text-sm tracking-wider uppercase rounded-xl transition-all duration-300 shadow-lg shadow-primary/10">
+                        <span class="lang-vi">Xem Các Vị Trí Đang Tuyển Dụng <i class="fa-solid fa-arrow-right ml-1"></i></span>
+                        <span class="lang-zh">浏览当前在招职位 <i class="fa-solid fa-arrow-right ml-1"></i></span>
+                    </button>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+    <footer class="bg-secondary text-gray-300 py-16 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
+                
+                <div class="md:col-span-5 space-y-5">
+                    <a href="javascript:void(0)" onclick="navigateTo('recruitment')" class="flex items-center gap-3.5 group">
+                        <div class="w-10 h-10 flex items-center justify-center">
+                            <svg viewBox="0 0 100 100" class="w-full h-full">
+                                <path d="M70 20 L25 46 L50 46 L20 80 L75 54 L50 54 Z" fill="#b29267" />
+                                <path d="M70 20 L25 46 L55 46 L40 38 Z" fill="#0072FF" />
+                                <path d="M45 46 L20 80 L52 54 L41 46 Z" fill="#b29267" />
+                                <path d="M41 46 L60 46 L75 54 L45 54 Z" fill="#0072FF" />
+                            </svg>
+                        </div>
+                        <span class="font-bold text-xl text-white tracking-wider uppercase serif-title">
+                            <span class="lang-vi">Nanshuo Việt Nam</span>
+                            <span class="lang-zh">南朔（越南）</span>
+                        </span>
+                    </a>
+                    <p class="text-xs text-gray-400 leading-relaxed font-light uppercase">
+                        <span class="lang-vi">CÔNG TY TNHH QUẢN LÝ THƯƠNG HIỆU NANSHUO VIỆT NAM</span>
+                        <span class="lang-zh">南朔（越南）品牌管理有限公司</span>
+                    </p>
+                    <p class="text-sm text-gray-400 leading-relaxed font-light">
+                        <span class="lang-vi">Mã số thuế: <strong>0110928626</strong><br>Được cấp bởi Sở Kế hoạch và Đầu tư Thành phố Hà Nội.<br>Đồng hành phát triển phong cách và nâng tầm giá trị cuộc sống hiện đại thông qua các thương hiệu Việt chất lượng cao.</span>
+                        <span class="lang-zh">纳税识别号：<strong>0110928626</strong><br>由越南河内市计划与投资厅颁发营业执照。<br>通过高品质、艺术美学的本土品牌策划，赋能时尚，重塑现代优质美学生活新风尚。</span>
+                    </p>
+                    <div class="flex space-x-4 pt-2">
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors"><i class="fa-brands fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors"><i class="fa-brands fa-linkedin text-xl"></i></a>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2 space-y-4">
+                    <h4 class="text-white font-bold text-xs tracking-wider uppercase">
+                        <span class="lang-vi">Liên Kết</span>
+                        <span class="lang-zh">快捷导航</span>
+                    </h4>
+                    <ul class="space-y-2.5 text-sm font-light">
+                        <li>
+                            <a href="javascript:void(0)" onclick="navigateTo('about-us')" class="hover:text-primary transition-colors">
+                                <span class="lang-vi">Về chúng tôi</span>
+                                <span class="lang-zh">关于我们</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" onclick="navigateTo('recruitment', '#culture')" class="hover:text-primary transition-colors">
+                                <span class="lang-vi">Giá trị cốt lõi</span>
+                                <span class="lang-zh">核心价值</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" onclick="navigateTo('recruitment', '#benefits')" class="hover:text-primary transition-colors">
+                                <span class="lang-vi">Đặc quyền nội bộ</span>
+                                <span class="lang-zh">专属福利</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" onclick="navigateTo('recruitment', '#jobs')" class="hover:text-primary transition-colors">
+                                <span class="lang-vi">Vị trí đang tuyển</span>
+                                <span class="lang-zh">在招岗位</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="md:col-span-5 space-y-4">
+                    <h4 class="text-white font-bold text-xs tracking-wider uppercase">
+                        <span class="lang-vi">Văn Phòng Tuyển Dụng</span>
+                        <span class="lang-zh">人才招募办公室</span>
+                    </h4>
+                    <ul class="space-y-3.5 text-sm font-light">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot mt-1 text-primary"></i>
+                            <span class="text-gray-400">
+                                <span class="lang-vi">Số 57, Louis VIII- LK29 khu đô thị mới Hoàng Văn Thụ, Phường Hoàng Văn Thụ, Quận Hoàng Mai, Thành phố Hà Nội, Việt Nam</span>
+                                <span class="lang-zh">越南河内市黄梅区黄文树新都市区 Louis VIII- LK29, 57号</span>
+                            </span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-envelope text-primary"></i>
+                            <span class="text-gray-400">tuyendungnanshuo@gmail.com</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-primary"></i>
+                            <span class="text-gray-400">0866 826 475</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+                <p>&copy; 2026 NANSHUO VIỆT NAM BRAND MANAGEMENT CO., LTD. All rights reserved.</p>
+                <div class="flex gap-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition-colors">
+                        <span class="lang-vi">Chính sách bảo mật</span>
+                        <span class="lang-zh">隐私政策</span>
+                    </a>
+                    <a href="#" class="hover:text-white transition-colors">
+                        <span class="lang-vi">Điều khoản dịch vụ</span>
+                        <span class="lang-zh">服务条款</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL ỨNG TUYỂN DÀNH CHO CÁC VỊ TRÍ -->
+    <div id="apply-modal" class="fixed inset-0 bg-secondary/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden transition-opacity duration-300">
+        <div class="bg-white rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl border border-gray-100 transform transition-all duration-300 scale-95" id="modal-box">
+            <!-- Header Modal -->
+            <div class="bg-secondary p-6 text-white flex justify-between items-center">
+                <div>
+                    <span class="text-[10px] text-primary font-bold tracking-widest uppercase block mb-1">
+                        <span class="lang-vi">Hồ Sơ Điện Tử</span>
+                        <span class="lang-zh">在线简历提交</span>
+                    </span>
+                    <h3 class="text-xl font-bold serif-title" id="apply-job-title">Ứng tuyển vị trí</h3>
+                </div>
+                <button onclick="closeApplyModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-all">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <!-- Body Form -->
+            <!-- CHÚ Ý: ĐỂ CHẠY THẬT HÃY THAY 'YOUR_API_ENDPOINT' BẰNG URL TỪ FORMSPREE HOẶC GOOGLE SHEETS -->
+            <form id="apply-form" action="YOUR_API_ENDPOINT" method="POST" enctype="multipart/form-data" class="p-6 space-y-4" onsubmit="submitApplication(event)">
+                <input type="hidden" id="job-name-input" name="jobTitle">
+                
+                <!-- Input Name -->
+                <div>
+                    <label class="block text-xs font-bold text-secondary uppercase tracking-wider mb-1">
+                        <span class="lang-vi">Họ và tên *</span>
+                        <span class="lang-zh">姓名 *</span>
+                    </label>
+                    <input type="text" id="applicant-name" name="fullName" required placeholder="Nguyễn Văn A" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary text-sm">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-secondary uppercase tracking-wider mb-1">
+                            <span class="lang-vi">Email liên lạc *</span>
+                            <span class="lang-zh">电子邮箱 *</span>
+                        </label>
+                        <input type="email" name="email" required placeholder="example@gmail.com" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-secondary uppercase tracking-wider mb-1">
+                            <span class="lang-vi">Số điện thoại *</span>
+                            <span class="lang-zh">手机号码 *</span>
+                        </label>
+                        <input type="tel" name="phone" required placeholder="0866 826 475" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary text-sm">
+                    </div>
+                </div>
+
+                <!-- File upload drag zone -->
+                <div>
+                    <label class="block text-xs font-bold text-secondary uppercase tracking-wider mb-1">
+                        <span class="lang-vi">Đính kèm CV / Portfolio (PDF, Word) *</span>
+                        <span class="lang-zh">上传简历 / 个人作品集 (PDF, Word) *</span>
+                    </label>
+                    <div class="border-2 border-dashed border-gray-200 hover:border-primary rounded-xl p-6 text-center cursor-pointer transition-all bg-bgLight relative" id="drop-zone">
+                        <input type="file" id="cv-file" name="cvFile" required class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onchange="handleFileChange(event)">
+                        <div class="space-y-2">
+                            <i class="fa-solid fa-cloud-arrow-up text-3xl text-primary"></i>
+                            <p class="text-sm font-semibold text-secondary" id="file-label-text">
+                                <span class="lang-vi">Bấm vào đây hoặc kéo thả tệp của bạn</span>
+                                <span class="lang-zh">点击此处或将您的简历文件拖拽到此处</span>
+                            </p>
+                            <p class="text-xs text-gray-400">
+                                <span class="lang-vi">Chấp nhận định dạng .pdf, .doc, .docx tối đa 15MB</span>
+                                <span class="lang-zh">接受 .pdf, .doc, .docx 格式，最大15MB</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-secondary uppercase tracking-wider mb-1">
+                        <span class="lang-vi">Thư giới thiệu bản thân (Nếu có)</span>
+                        <span class="lang-zh">求职信 / 自我推荐 (选填)</span>
+                    </label>
+                    <textarea name="coverLetter" rows="3" placeholder="..." class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary text-sm"></textarea>
+                </div>
+
+                <!-- Action buttons -->
+                <div class="flex gap-4 pt-2">
+                    <button type="button" onclick="closeApplyModal()" class="flex-1 py-3 text-xs font-bold tracking-wider uppercase border border-gray-200 rounded-xl hover:bg-gray-50 text-gray-700 transition-colors">
+                        <span class="lang-vi">Đóng lại</span>
+                        <span class="lang-zh">取消关闭</span>
+                    </button>
+                    <button type="submit" class="flex-1 py-3 text-xs font-bold tracking-wider uppercase bg-primary text-white rounded-xl hover:bg-primaryDark transition-colors shadow-md shadow-primary/15">
+                        <span class="lang-vi">Nộp Hồ Sơ</span>
+                        <span class="lang-zh">提交申请</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL CHI TIẾT CÔNG VIỆC -->
+    <!-- 1. Detail FBM -->
+    <div id="fbm-detail" class="fixed inset-0 bg-secondary/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden transition-opacity duration-300">
+        <div class="bg-white rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl border border-gray-100 max-h-[90vh] flex flex-col">
+            <div class="bg-secondary p-6 text-white flex justify-between items-center flex-shrink-0">
+                <div>
+                    <span class="text-[10px] text-primary font-bold tracking-widest uppercase block mb-1">
+                        <span class="lang-vi">Mô tả công việc</span>
+                        <span class="lang-zh">职位详情</span>
+                    </span>
+                    <h3 class="text-xl font-bold serif-title">Fashion Brand Manager</h3>
+                </div>
+                <button onclick="closeDetailModal('fbm-detail')" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-all">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-6 text-sm">
+                <div class="lang-vi space-y-6">
+                    <div>
+                        <h4 class="font-bold text-secondary text-base mb-2 flex items-center gap-2"><span class="w-1.5 h-4 bg-primary inline-block rounded"></span> Nhiệm vụ chính</h4>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600 font-light">
+                            <li>Xây dựng tầm nhìn, định vị thương hiệu và hoạch định chiến lược kinh doanh ngắn - trung - dài hạn cho các dòng thời trang trực thuộc.</li>
+                            <li>Chịu trách nhiệm về doanh số, chi phí marketing, lợi nhuận gộp của thương hiệu.</li>
+                            <li>Lên ý tưởng, định hướng hình ảnh cho các bộ sưu tập, chiến dịch truyền thông định kỳ.</li>
+                            <li>Nghiên cứu sâu sắc insight khách hàng mục tiêu, đối thủ cạnh tranh để điều chỉnh và tối ưu hóa sản phẩm.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-secondary text-base mb-2 flex items-center gap-2"><span class="w-1.5 h-4 bg-primary inline-block rounded"></span> Yêu cầu ứng viên</h4>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600 font-light">
+                            <li>Có tối thiểu 2 - 3 năm kinh nghiệm ở vị trí tương đương hoặc Trưởng nhóm Marketing trong lĩnh vực thời trang, bán lẻ cao cấp.</li>
+                            <li>Nhạy bén với các xu hướng thời trang quốc tế và Việt Nam.</li>
+                            <li>Khả năng lập kế hoạch, phân tích số liệu và quản lý đội nhóm xuất sắc.</li>
+                            <li>Có gu thẩm mỹ cao, tư duy sáng tạo tốt.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="lang-zh space-y-6">
+                    <div>
+                        <h4 class="font-bold text-secondary text-base mb-2 flex items-center gap-2"><span class="w-1.5 h-4 bg-primary inline-block rounded"></span> 主要职责</h4>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600 font-light">
+                            <li>负责旗下时尚女装品牌的整体战略定位、视觉及中长期商业发展规划。</li>
+                            <li>对品牌销售业绩、营销预算效益及品牌整体毛利达成负责。</li>
+                            <li>主导季度新品上市策略及视觉大片概念方案，制定核心宣发主线。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 border-t border-gray-100 bg-bgLight flex justify-end gap-3 flex-shrink-0">
+                <button onclick="closeDetailModal('fbm-detail')" class="px-5 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors">
+                    <span class="lang-vi">Đóng</span>
+                    <span class="lang-zh">关闭</span>
+                </button>
+                <button onclick="closeDetailModal('fbm-detail'); openApplyModal('Fashion Brand Manager')" class="px-5 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg bg-primary text-white hover:bg-primaryDark transition-colors">
+                    <span class="lang-vi">Ứng tuyển ngay</span>
+                    <span class="lang-zh">立即投递</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Detail Graphic Designer -->
+    <div id="gd-detail" class="fixed inset-0 bg-secondary/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden transition-opacity duration-300">
+        <div class="bg-white rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl border border-gray-100 max-h-[90vh] flex flex-col">
+            <div class="bg-secondary p-6 text-white flex justify-between items-center flex-shrink-0">
+                <div>
+                    <span class="text-[10px] text-primary font-bold tracking-widest uppercase block mb-1">
+                        <span class="lang-vi">Mô tả công việc</span>
+                        <span class="lang-zh">职位详情</span>
+                    </span>
+                    <h3 class="text-xl font-bold serif-title">Graphic Designer</h3>
+                </div>
+                <button onclick="closeDetailModal('gd-detail')" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-all">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-6 text-sm">
+                <div class="lang-vi space-y-6">
+                    <div>
+                        <h4 class="font-bold text-secondary text-base mb-2 flex items-center gap-2"><span class="w-1.5 h-4 bg-primary inline-block rounded"></span> Nhiệm vụ chính</h4>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600 font-light">
+                            <li>Thiết kế các ấn phẩm truyền thông số: Banner quảng cáo, giao diện mạng xã hội (Facebook, Instagram, TikTok), landing page...</li>
+                            <li>Sáng tạo bộ nhận diện thương hiệu cho các điểm bán mới (biển bảng, quầy kệ, nhãn mác sản phẩm).</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="lang-zh space-y-6">
+                    <div>
+                        <h4 class="font-bold text-secondary text-base mb-2 flex items-center gap-2"><span class="w-1.5 h-4 bg-primary inline-block rounded"></span> 主要职责</h4>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600 font-light">
+                            <li>设计高奢数字营销物料，包括社交媒体推广长图、信息流广告、Landing Page等。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 border-t border-gray-100 bg-bgLight flex justify-end gap-3 flex-shrink-0">
+                <button onclick="closeDetailModal('gd-detail')" class="px-5 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors">
+                    <span class="lang-vi">Đóng</span>
+                    <span class="lang-zh">关闭</span>
+                </button>
+                <button onclick="closeDetailModal('gd-detail'); openApplyModal('Graphic Designer')" class="px-5 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg bg-primary text-white hover:bg-primaryDark transition-colors">
+                    <span class="lang-vi">Ứng tuyển ngay</span>
+                    <span class="lang-zh">立即投递</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Detail Store Manager -->
+    <div id="sm-detail" class="fixed inset-0 bg-secondary/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden transition-opacity duration-300">
+        <div class="bg-white rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl border border-gray-100 max-h-[90vh] flex flex-col">
+            <div class="bg-secondary p-6 text-white flex justify-between items-center flex-shrink-0">
+                <div>
+                    <span class="text-[10px] text-primary font-bold tracking-widest uppercase block mb-1">
+                        <span class="lang-vi">Mô tả công việc</span>
+                        <span class="lang-zh">职位详情</span>
+                    </span>
+                    <h3 class="text-xl font-bold serif-title">Store Manager</h3>
+                </div>
+                <button onclick="closeDetailModal('sm-detail')" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-all">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-6 text-sm">
+                <div class="lang-vi space-y-6">
+                    <div>
+                        <h4 class="font-bold text-secondary text-base mb-2 flex items-center gap-2"><span class="w-1.5 h-4 bg-primary inline-block rounded"></span> Nhiệm vụ chính</h4>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600 font-light">
+                            <li>Vận hành hàng ngày tại cửa hàng: Kiểm soát chất lượng dịch vụ khách hàng, kiểm kho, quản lý ngân sách.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="lang-zh space-y-6">
+                    <div>
+                        <h4 class="font-bold text-secondary text-base mb-2 flex items-center gap-2"><span class="w-1.5 h-4 bg-primary inline-block rounded"></span> 主要职责</h4>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-600 font-light">
+                            <li>负责店铺全盘运营：包括高水准顾客服务监督、商品流转库存控制。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 border-t border-gray-100 bg-bgLight flex justify-end gap-3 flex-shrink-0">
+                <button onclick="closeDetailModal('sm-detail')" class="px-5 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors">
+                    <span class="lang-vi">Đóng</span>
+                    <span class="lang-zh">关闭</span>
+                </button>
+                <button onclick="closeDetailModal('sm-detail'); openApplyModal('Store Manager')" class="px-5 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg bg-primary text-white hover:bg-primaryDark transition-colors">
+                    <span class="lang-vi">Ứng tuyển ngay</span>
+                    <span class="lang-zh">立即投递</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST THÔNG BÁO -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-secondary text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 hidden z-50 border border-primary/20 transform translate-y-2 opacity-0 transition-all duration-300">
+        <div class="w-10 h-10 bg-primary/10 text-primary rounded-full flex items-center justify-center text-xl flex-shrink-0">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <div>
+            <div class="lang-vi">
+                <h4 class="font-bold text-sm" id="toast-title-vi">Thành công!</h4>
+                <p class="text-xs text-gray-400 font-light" id="toast-msg-vi">Hành động của bạn đã được ghi nhận.</p>
+            </div>
+            <div class="lang-zh">
+                <h4 class="font-bold text-sm" id="toast-title-zh">提交成功！</h4>
+                <p class="text-xs text-gray-400 font-light" id="toast-msg-zh">我们已经收到您的岗位申请，会尽快安排反馈。</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CƠ CHẾ ĐIỀU HƯỚNG VIEW
+        function navigateTo(viewId, anchorId = null) {
+            document.getElementById('view-recruitment').classList.add('hidden');
+            document.getElementById('view-recruitment').classList.remove('block');
+            document.getElementById('view-about-us').classList.add('hidden');
+            document.getElementById('view-about-us').classList.remove('block');
+
+            if (viewId === 'recruitment') {
+                const recruitmentPanel = document.getElementById('view-recruitment');
+                recruitmentPanel.classList.remove('hidden');
+                recruitmentPanel.classList.add('block');
+                
+                if (anchorId) {
+                    setTimeout(() => {
+                        const target = document.querySelector(anchorId);
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }, 50);
+                } else {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            } else if (viewId === 'about-us') {
+                const aboutPanel = document.getElementById('view-about-us');
+                aboutPanel.classList.remove('hidden');
+                aboutPanel.classList.add('block');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+                const menuIcon = mobileMenuBtn.querySelector('i');
+                if (menuIcon) {
+                    menuIcon.classList.remove('fa-xmark');
+                    menuIcon.classList.add('fa-bars');
+                }
+            }
+        }
+
+        // Hàm chuyển đổi ngôn ngữ
+        function switchLanguage(lang) {
+            document.documentElement.setAttribute('lang', lang);
+
+            document.querySelectorAll('.lang-switch-btn').forEach(btn => {
+                btn.classList.remove('bg-primary', 'text-white');
+                btn.classList.add('text-gray-500', 'hover:text-secondary');
+            });
+            const activeBtn = document.getElementById(`lang-btn-${lang}`);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-primary', 'text-white');
+                activeBtn.classList.remove('text-gray-500', 'hover:text-secondary');
+            }
+
+            document.querySelectorAll('.m-lang-switch-btn').forEach(btn => {
+                btn.classList.remove('bg-primary', 'text-white');
+                btn.classList.add('text-gray-500');
+            });
+            const activeMobileBtn = document.getElementById(`m-lang-btn-${lang}`);
+            if (activeMobileBtn) {
+                activeMobileBtn.classList.add('bg-primary', 'text-white');
+                activeMobileBtn.classList.remove('text-gray-500');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            switchLanguage('vi');
+
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = mobileMenuBtn.querySelector('i');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                if (mobileMenu.classList.contains('hidden')) {
+                    menuIcon.classList.remove('fa-xmark');
+                    menuIcon.classList.add('fa-bars');
+                } else {
+                    menuIcon.classList.remove('fa-bars');
+                    menuIcon.classList.add('fa-xmark');
+                }
+            });
+        });
+
+        function filterJobs(category) {
+            const jobItems = document.querySelectorAll('.job-item');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+
+            filterBtns.forEach(btn => {
+                btn.className = "filter-btn px-4 py-2.5 text-xs font-bold tracking-wider uppercase rounded-lg text-gray-500 hover:bg-gray-50 transition-all";
+            });
+            const activeBtn = document.getElementById(`btn-${category}`);
+            if (activeBtn) {
+                activeBtn.className = "filter-btn px-4 py-2.5 text-xs font-bold tracking-wider uppercase rounded-lg bg-primary text-white transition-all shadow-md shadow-primary/10";
+            }
+
+            jobItems.forEach(item => {
+                if (category === 'all' || item.getAttribute('data-category') === category) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function openApplyModal(jobTitle) {
+            const modal = document.getElementById('apply-modal');
+            const modalBox = document.getElementById('modal-box');
+            const titleElement = document.getElementById('apply-job-title');
+            const inputElement = document.getElementById('job-name-input');
+
+            const currentLang = document.documentElement.getAttribute('lang');
+            if (currentLang === 'vi') {
+                titleElement.innerText = `Ứng tuyển: ${jobTitle}`;
+            } else {
+                titleElement.innerText = `职位投递: ${jobTitle}`;
+            }
+            inputElement.value = jobTitle;
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalBox.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeApplyModal() {
+            const modal = document.getElementById('apply-modal');
+            const modalBox = document.getElementById('modal-box');
+
+            modalBox.classList.add('scale-95');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.getElementById('apply-form').reset();
+                
+                const labelText = document.getElementById('file-label-text');
+                const currentLang = document.documentElement.getAttribute('lang');
+                if (currentLang === 'vi') {
+                    labelText.innerHTML = `<span class="lang-vi">Bấm vào đây hoặc kéo thả tệp của bạn</span>`;
+                } else {
+                    labelText.innerHTML = `<span class="lang-zh">点击此处或将您的简历文件拖拽到此处</span>`;
+                }
+                labelText.classList.remove('text-primary');
+            }, 300);
+        }
+
+        function openDetailModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function closeDetailModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function handleFileChange(event) {
+            const label = document.getElementById('file-label-text');
+            const file = event.target.files[0];
+            const currentLang = document.documentElement.getAttribute('lang');
+            if (file) {
+                const fileSizeMB = (file.size / 1024 / 1024).toFixed(2);
+                if (currentLang === 'vi') {
+                    label.innerText = `Đã chọn: ${file.name} (${fileSizeMB} MB)`;
+                } else {
+                    label.innerText = `已选择: ${file.name} (${fileSizeMB} MB)`;
+                }
+                label.classList.add('text-primary');
+            }
+        }
+
+        // GỬI HỒ SƠ LÊN HỆ THỐNG
+        function submitApplication(event) {
+            event.preventDefault();
+            const form = event.target;
+            const jobTitle = document.getElementById('job-name-input').value;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+
+            const currentLang = document.documentElement.getAttribute('lang');
+            if (currentLang === 'vi') {
+                submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Đang tải CV & gửi hồ sơ...';
+            } else {
+                submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> 正在上传并提交...';
+            }
+            submitBtn.disabled = true;
+
+            // KIỂM TRA CHẾ ĐỘ THỬ NGHIỆM (DEMO MODE)
+            if (form.action.includes('YOUR_API_ENDPOINT') || form.action.includes('YOUR_GOOGLE_APPS_SCRIPT_URL') || form.action.trim() === '') {
+                setTimeout(() => {
+                    closeApplyModal();
+                    if (currentLang === 'vi') {
+                        showToast(
+                            "Thử nghiệm thành công!", 
+                            `[Chế độ Demo] Đã giả lập gửi CV cho vị trí "${jobTitle}" thành công! Để chạy thực tế, hãy cấu hình đường dẫn thật vào thẻ action.`
+                        );
+                    } else {
+                        showToast(
+                            "演示提交成功！", 
+                            `[测试模式] 模拟投递 "${jobTitle}" 岗位成功！`
+                        );
+                    }
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                }, 1800);
+                return;
+            }
+
+            // GỬI THẬT
+            if (form.action.includes('formspree.io')) {
+                const formData = new FormData(form);
+
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        closeApplyModal();
+                        if (currentLang === 'vi') {
+                            showToast("Gửi thành công!", `Hồ sơ cho vị trí ${jobTitle} đã được chuyển về email tuyển dụng.`);
+                        } else {
+                            showToast("提交成功！", `您申请 ${jobTitle} 岗位的简历已发送至招聘邮箱。`);
+                        }
+                    } else {
+                        throw new Error("Lỗi máy chủ phản hồi từ Formspree.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Formspree Error:", error);
+                    showToast(
+                        currentLang === 'vi' ? "Gửi thất bại" : "提交失败", 
+                        currentLang === 'vi' ? "Không thể tải lên file CV. Vui lòng kiểm tra dung lượng tệp hoặc cấu hình Formspree." : "简历上传失败，请检查文件大小。"
+                    );
+                })
+                .finally(() => {
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                });
+                
+            } else {
+                const fileInput = document.getElementById('cv-file');
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const base64Data = e.target.result.split(',')[1];
+                    
+                    const payload = {
+                        fullName: form.fullName.value,
+                        email: form.email.value,
+                        phone: form.phone.value,
+                        jobTitle: jobTitle,
+                        coverLetter: form.coverLetter.value,
+                        cvFile: base64Data,
+                        cvFileName: file.name,
+                        cvMimeType: file.type
+                    };
+
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: JSON.stringify(payload)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            closeApplyModal();
+                            showToast(
+                                currentLang === 'vi' ? "Gửi thành công!" : "提交成功！",
+                                currentLang === 'vi' ? `Hồ sơ của bạn đã được ghi nhận vào Bảng tính Google.` : `您的简历已被写入 Google 表格中。`
+                            );
+                        } else {
+                            throw new Error(data.message || "Lỗi xử lý hệ thống.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Apps Script Error:", error);
+                        showToast(
+                            currentLang === 'vi' ? "Gửi thất bại" : "提交失败",
+                            currentLang === 'vi' ? "Không thể truyền dữ liệu tới Bảng tính. Hãy kiểm tra cài đặt Apps Script." : "发送数据至 Google Sheets 时出错。"
+                        );
+                    })
+                    .finally(() => {
+                        submitBtn.innerHTML = originalBtnText;
+                        submitBtn.disabled = false;
+                    });
+                };
+
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function showToast(title, msg) {
+            const toast = document.getElementById('toast');
+            const currentLang = document.documentElement.getAttribute('lang');
+            if (currentLang === 'vi') {
+                document.getElementById('toast-title-vi').innerText = title;
+                document.getElementById('toast-msg-vi').innerText = msg;
+            } else {
+                document.getElementById('toast-title-zh').innerText = title;
+                document.getElementById('toast-msg-zh').innerText = msg;
+            }
+
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.remove('opacity-0', 'translate-y-2');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 300);
+            }, 6000);
+        }
+    </script>
+</body>
+</html>
+```
+
+Tôi đã tiến hành chỉnh sửa mã nguồn của trang web tuyển dụng NANSHUO trên **Canvas** để tích hợp thêm một lựa chọn dịch vụ gửi form hoàn toàn miễn phí, hỗ trợ file đính kèm tối đa mà không bị giới hạn chính sách như tài khoản Formspree miễn phí.
+
+### 🛠️ Chi tiết nâng cấp hệ thống Form trong Canvas:
+1. **Tích hợp cổng nhận 100% Free - FormSubmit.co:** Tôi đã thiết kế lại luồng xử lý JavaScript trong sự kiện nộp hồ sơ (`submitApplication`). Ngoài việc giữ nguyên liên kết Google
