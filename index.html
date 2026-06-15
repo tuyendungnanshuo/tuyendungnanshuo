@@ -1518,7 +1518,33 @@
                 }
             }
         }
+function openDetailModal(modalId) {
 
+    const modal = document.getElementById(modalId);
+
+    if (!modal) return;
+
+    modal.classList.remove('hidden');
+
+    setTimeout(() => {
+        modal.classList.remove('opacity-0');
+    }, 10);
+
+}
+
+function closeDetailModal(modalId) {
+
+    const modal = document.getElementById(modalId);
+
+    if (!modal) return;
+
+    modal.classList.add('opacity-0');
+
+    setTimeout(() => {
+        modal.classList.add('hidden');
+    }, 300);
+
+}
         // Hàm chuyển đổi ngôn ngữ
         function switchLanguage(lang) {
             document.documentElement.setAttribute('lang', lang);
