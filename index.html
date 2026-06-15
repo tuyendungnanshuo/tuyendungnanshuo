@@ -1586,8 +1586,29 @@
 
         function openApplyModal(jobTitle) {
 
-    const formUrl =
-    "https://docs.google.com/forms/d/e/1FAIpQLSdo1ossbZNN6j2zKBXB20HIbANhr5ks__goqn-ghT_Taczypg/viewform";
+    let formUrl = "";
+
+    switch (jobTitle) {
+
+        case "Quản Lý Cửa Hàng Bán Lẻ (Store Manager)":
+            formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdo1ossbZNN6j2zKBXB20HIbANhr5ks__goqn-ghT_Taczypg/viewform";
+            break;
+
+        case "Nhân Viên Tư Vấn Bán Hàng Thời Trang (Full/Part-time)":
+            formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSd_TUMtx7ptlF8TPghTFMOtQz0iXLXi3fP7VpPf7qJg_jqNbw/viewform";
+            break;
+
+        case "Store Manager":
+            formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdo1ossbZNN6j2zKBXB20HIbANhr5ks__goqn-ghT_Taczypg/viewform";
+            break;
+
+        case "Content Marketing Specialist":
+            formUrl = "LINK_GOOGLE_FORM_MARKETING";
+            break;
+
+        default:
+            formUrl = "LINK_GOOGLE_FORM_CHUNG";
+    }
 
     window.open(formUrl, "_blank");
 
