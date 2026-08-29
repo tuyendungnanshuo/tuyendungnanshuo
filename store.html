@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <title>Cửa hàng | Nanshuo Việt Nam</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Plus Jakarta Sans','sans-serif'],serif:['Playfair Display','serif']},colors:{primary:'#b29267',primaryDark:'#8e714b',secondary:'#111827',accent:'#0f5a47',bgLight:'#faf9f6'}}}}</script>
+  <style>
+    body{font-family:'Plus Jakarta Sans',sans-serif;background:#faf9f6}.serif{font-family:'Playfair Display',serif}
+    html[lang="vi"] .lang-zh{display:none!important}html[lang="zh"] .lang-vi{display:none!important}
+    .product-card{transition:transform .3s ease,box-shadow .3s ease}.product-card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(17,24,39,.09)}
+  </style>
+</head>
+<body class="text-gray-800 antialiased">
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      <a href="/" class="flex items-center gap-3 min-w-0">
+        <div class="w-11 h-11 flex-shrink-0"><svg viewBox="0 0 100 100" class="w-full h-full"><path d="M70 20 L25 46 L50 46 L20 80 L75 54 L50 54 Z" fill="#333"/><path d="M70 20 L25 46 L55 46 L40 38 Z" fill="#0072FF"/><path d="M45 46 L20 80 L52 54 L41 46 Z" fill="#333"/><path d="M41 46 L60 46 L75 54 L45 54 Z" fill="#0072FF"/></svg></div>
+        <div class="min-w-0"><div class="font-extrabold tracking-wider text-secondary truncate">NANSHUO <span class="text-gray-500">南硕</span></div><div class="text-[9px] uppercase tracking-[.18em] text-gray-400 font-bold">Brand Management</div></div>
+      </a>
+      <div class="flex items-center gap-2">
+        <div class="flex bg-gray-100 p-1 rounded-lg border border-gray-200"><button id="lang-vi" class="px-2.5 py-1.5 text-[11px] font-bold rounded-md bg-primary text-white">VI</button><button id="lang-zh" class="px-2.5 py-1.5 text-[11px] font-bold rounded-md text-gray-500">中文</button></div>
+        <a href="/" class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-xs font-bold hover:border-primary hover:text-primary transition"><i class="fa-solid fa-arrow-left"></i><span class="lang-vi">Trang tuyển dụng</span><span class="lang-zh">招聘主页</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="bg-white border-b border-gray-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
+        <nav class="text-xs text-gray-400 flex flex-wrap items-center gap-2"><a href="/" class="hover:text-primary"><span class="lang-vi">Trang chủ</span><span class="lang-zh">首页</span></a><i class="fa-solid fa-chevron-right text-[8px]"></i><span id="crumb-brand"></span><i class="fa-solid fa-chevron-right text-[8px]"></i><span id="crumb-store"></span></nav>
+        <div class="mt-7 grid lg:grid-cols-[1fr_320px] gap-8 items-end">
+          <div>
+            <div id="brand-pill" class="inline-flex px-3 py-1.5 rounded-full bg-amber-50 text-primary border border-primary/20 text-[10px] font-bold tracking-widest uppercase"></div>
+            <h1 id="store-title" class="serif text-4xl md:text-6xl font-bold text-secondary mt-4 leading-tight"></h1>
+            <p id="brand-desc" class="mt-4 max-w-2xl text-gray-500 leading-7"></p>
+          </div>
+          <div id="brand-image-wrap" class="hidden lg:block aspect-[4/3] rounded-3xl overflow-hidden bg-stone-100 border border-gray-100 shadow-sm"><img id="brand-image" class="w-full h-full object-cover" alt=""></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+        <div><div class="text-[10px] text-primary tracking-[.18em] uppercase font-bold"><span class="lang-vi">Bộ sưu tập tại cửa hàng</span><span class="lang-zh">门店商品系列</span></div><h2 class="serif text-3xl md:text-4xl font-bold mt-2"><span class="lang-vi">Khám phá sản phẩm</span><span class="lang-zh">探索商品</span></h2></div>
+        <div class="relative w-full lg:w-80"><i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i><input id="product-search" class="w-full bg-white border border-gray-200 rounded-2xl py-3.5 pl-11 pr-4 outline-none focus:border-primary" placeholder="Tìm sản phẩm..."></div>
+      </div>
+      <div id="category-filters" class="mt-7 flex flex-wrap gap-2"></div>
+      <div id="catalog-status" class="mt-8 hidden rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm text-amber-900"></div>
+      <div id="product-grid" class="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"></div>
+      <div id="empty-state" class="hidden mt-10 text-center bg-white border border-gray-100 rounded-3xl p-10"><div class="w-14 h-14 mx-auto rounded-2xl bg-stone-100 grid place-items-center text-gray-400"><i class="fa-solid fa-shirt text-xl"></i></div><h3 class="serif text-xl font-bold mt-5"><span class="lang-vi">Sản phẩm đang được cập nhật</span><span class="lang-zh">商品正在更新中</span></h3><p class="text-sm text-gray-500 mt-2"><span class="lang-vi">Vui lòng quay lại sau để xem bộ sưu tập mới nhất tại cửa hàng.</span><span class="lang-zh">请稍后回来查看本店最新商品。</span></p></div>
+    </section>
+  </main>
+
+  <footer class="bg-secondary text-white"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col md:flex-row justify-between gap-5"><div><div class="font-extrabold tracking-wider">NANSHUO 南硕</div><div class="text-xs text-white/40 mt-2">CÔNG TY TNHH QUẢN LÝ THƯƠNG HIỆU NANSHUO VIỆT NAM</div></div><a href="/" class="text-sm text-white/60 hover:text-white"><i class="fa-solid fa-arrow-left mr-2"></i><span class="lang-vi">Quay lại trang tuyển dụng</span><span class="lang-zh">返回招聘主页</span></a></div></footer>
+
+  <div id="product-modal" class="fixed inset-0 z-50 hidden"><div class="absolute inset-0 bg-black/70 backdrop-blur-sm" data-close-modal></div><div class="relative min-h-full flex items-end md:items-center justify-center p-0 md:p-5"><div class="bg-white w-full md:max-w-5xl rounded-t-3xl md:rounded-3xl max-h-[94vh] overflow-auto"><div class="grid md:grid-cols-2"><div class="bg-stone-100 p-4"><div class="aspect-[3/4] rounded-2xl overflow-hidden bg-white"><img id="modal-main-image" class="w-full h-full object-cover" alt=""></div><div id="modal-thumbs" class="mt-3 grid grid-cols-5 gap-2"></div></div><div class="p-6 md:p-9"><div id="modal-category" class="text-[10px] text-primary uppercase tracking-[.17em] font-bold"></div><h3 id="modal-name" class="serif text-3xl font-bold mt-2"></h3><div id="modal-price" class="text-lg font-bold text-accent mt-4"></div><p id="modal-description" class="text-gray-500 leading-7 mt-5 whitespace-pre-line"></p><div class="mt-8 rounded-2xl bg-bgLight p-4 text-sm text-gray-500"><i class="fa-solid fa-location-dot text-primary mr-2"></i><span id="modal-store"></span></div><button data-close-modal class="mt-7 w-full rounded-2xl bg-secondary text-white py-3.5 font-bold hover:bg-primary transition"><span class="lang-vi">Đóng</span><span class="lang-zh">关闭</span></button></div></div></div></div></div>
+
+  <script src="config.js"></script>
+  <script type="module" src="store.js"></script>
+</body>
+</html>
