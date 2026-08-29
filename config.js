@@ -1,7 +1,6 @@
-/*
- * NANSHUO CMS CONFIG
- * Chỉ điền Supabase Project URL và Publishable/Anon key.
- * TUYỆT ĐỐI KHÔNG đặt service_role key vào file này.
+/* NANSHUO CMS CONFIG
+ * Publishable/Anon key is intended for browser use.
+ * NEVER place a service_role / secret key here.
  */
 window.NANSHUO_CONFIG = {
   supabaseUrl: "https://axbjetkwqstfvgcrqdvj.supabase.co",
