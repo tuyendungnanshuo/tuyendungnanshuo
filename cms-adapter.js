@@ -2,12 +2,51 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 
 const cfg = window.NANSHUO_CONFIG || {};
 const configured = cfg.supabaseUrl && cfg.supabaseKey && !cfg.supabaseUrl.includes('PASTE_') && !cfg.supabaseKey.includes('PASTE_');
+const esc = (s) => String(s ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+const lines = (s) => String(s ?? '').split(/\r?\n/).map(x => x.trim()).filter(Boolean);
+
+function storeUrl(brand, store) {
+  return `store.html?brand=${encodeURIComponent(String(brand || '').trim())}&store=${encodeURIComponent(String(store || '').trim())}`;
+}
+
+function enhanceStoreLinks() {
+  const section = document.getElementById('brands');
+  if (!section) return;
+  section.querySelectorAll('.group').forEach(card => {
+    const brand = card.querySelector('h3')?.textContent?.trim();
+    if (!brand) return;
+    card.querySelectorAll('.flex.flex-wrap.gap-1 > span').forEach(span => {
+      const store = span.textContent.trim();
+      if (!store) return;
+      const a = document.createElement('a');
+      a.href = storeUrl(brand, store);
+      a.className = `${span.className} inline-flex items-center gap-1 hover:bg-primary hover:text-white transition-colors`;
+      a.title = `Xem sản phẩm ${brand} tại ${store}`;
+      a.append(document.createTextNode(store));
+      const icon = document.createElement('i');
+      icon.className = 'fa-solid fa-arrow-up-right-from-square text-[8px] opacity-60';
+      a.appendChild(icon);
+      span.replaceWith(a);
+    });
+  });
+}
+
+function watchBrandGrid() {
+  enhanceStoreLinks();
+  const section = document.getElementById('brands');
+  if (!section || section.dataset.storeObserver === '1') return;
+  section.dataset.storeObserver = '1';
+  const observer = new MutationObserver(() => enhanceStoreLinks());
+  observer.observe(section, { childList: true, subtree: true });
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', watchBrandGrid, { once: true });
+else watchBrandGrid();
+
 if (!configured) {
   console.info('[Nanshuo CMS] Chưa cấu hình Supabase. Website tiếp tục dùng nội dung tĩnh trong index.html.');
 } else {
   const sb = createClient(cfg.supabaseUrl, cfg.supabaseKey);
-  const esc = (s) => String(s ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
-  const lines = (s) => String(s ?? '').split(/\r?\n/).map(x => x.trim()).filter(Boolean);
   let cmsJobs = [];
 
   function splitTitle(value) {
@@ -23,7 +62,6 @@ if (!configured) {
     if (!hero) return;
     const section = document.querySelector('#view-recruitment > section');
     if (!section) return;
-
     const badge = section.querySelector('.inline-flex');
     if (badge) {
       const vi = badge.querySelector('.lang-vi');
@@ -31,7 +69,6 @@ if (!configured) {
       if (vi && hero.eyebrow_vi) vi.textContent = hero.eyebrow_vi;
       if (zh && hero.eyebrow_zh) zh.textContent = hero.eyebrow_zh;
     }
-
     const h1 = section.querySelector('h1');
     if (h1) {
       const viSpans = h1.querySelectorAll('.lang-vi');
@@ -43,7 +80,6 @@ if (!configured) {
       if (zhSpans[0] && zh1) zhSpans[0].textContent = zh1;
       if (zhSpans[1] && zh2) zhSpans[1].textContent = zh2;
     }
-
     const intro = section.querySelector('h1 + p');
     if (intro) {
       const vi = intro.querySelector('.lang-vi');
@@ -51,7 +87,6 @@ if (!configured) {
       if (vi && hero.text_vi) vi.textContent = hero.text_vi;
       if (zh && hero.text_zh) zh.textContent = hero.text_zh;
     }
-
     const img = section.querySelector('img');
     if (img && hero.image) img.src = hero.image;
   }
@@ -94,15 +129,12 @@ if (!configured) {
         <div class="p-5 flex-grow flex flex-col justify-between">
           <div>
             <h3 class="font-serif text-xl font-bold text-secondary tracking-wider uppercase mb-2 text-center">${esc(b.name)}</h3>
-            <p class="font-sans text-sm text-gray-500 leading-relaxed font-light text-center">
-              <span class="lang-vi">${esc(b.desc_vi)}</span>
-              <span class="lang-zh">${esc(b.desc_zh)}</span>
-            </p>
+            <p class="font-sans text-sm text-gray-500 leading-relaxed font-light text-center"><span class="lang-vi">${esc(b.desc_vi)}</span><span class="lang-zh">${esc(b.desc_zh)}</span></p>
           </div>
           <div class="mt-4 pt-4 border-t border-stone-100">
             <span class="text-[10px] font-bold text-primary uppercase tracking-wider block mb-2"><i class="fa-solid fa-location-dot mr-1"></i> Cửa hàng / 门店:</span>
             <div class="flex flex-wrap gap-1">
-              ${(Array.isArray(b.locations) ? b.locations : []).map(x => `<span class="text-[10px] bg-stone-100 text-stone-600 px-2.5 py-1.5 rounded font-medium text-left">${esc(x)}</span>`).join('')}
+              ${(Array.isArray(b.locations) ? b.locations : []).map(x => `<a href="${storeUrl(b.name, x)}" class="text-[10px] bg-stone-100 text-stone-600 px-2.5 py-1.5 rounded font-medium text-left inline-flex items-center gap-1 hover:bg-primary hover:text-white transition-colors" title="Xem sản phẩm ${esc(b.name)} tại ${esc(x)}">${esc(x)}<i class="fa-solid fa-arrow-up-right-from-square text-[8px] opacity-60"></i></a>`).join('')}
             </div>
           </div>
         </div>
@@ -126,12 +158,7 @@ if (!configured) {
         <div class="flex gap-6 items-start">
           <div class="w-14 h-14 ${meta.wrap} rounded-xl flex items-center justify-center text-2xl flex-shrink-0 border"><i class="fa-solid ${esc(icon)}"></i></div>
           <div>
-            <div class="flex items-center gap-2 mb-1.5">
-              <h3 class="text-lg font-bold text-secondary hover:text-primary cursor-pointer transition-colors" onclick="window.nanshuoCmsDetail(${Number(j.id)})">
-                <span class="lang-vi">${esc(j.title_vi)}</span><span class="lang-zh">${esc(j.title_zh || j.title_vi)}</span>
-              </h3>
-              ${j.hot ? '<span class="bg-accent/10 text-accent text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Hot</span>' : ''}
-            </div>
+            <div class="flex items-center gap-2 mb-1.5"><h3 class="text-lg font-bold text-secondary hover:text-primary cursor-pointer transition-colors" onclick="window.nanshuoCmsDetail(${Number(j.id)})"><span class="lang-vi">${esc(j.title_vi)}</span><span class="lang-zh">${esc(j.title_zh || j.title_vi)}</span></h3>${j.hot ? '<span class="bg-accent/10 text-accent text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Hot</span>' : ''}</div>
             <div class="flex flex-wrap gap-4 text-xs text-gray-400 mb-3 font-medium">
               <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-primary"></i><span class="lang-vi">${esc(j.location)}</span><span class="lang-zh">${esc(j.location_zh || j.location)}</span></span>
               <span class="flex items-center gap-1.5"><i class="fa-solid fa-briefcase text-primary"></i><span class="lang-vi">${esc(j.type_vi)}</span><span class="lang-zh">${esc(j.type_zh || j.type_vi)}</span></span>
@@ -168,12 +195,14 @@ if (!configured) {
     if (j?.form_url) window.open(j.form_url, '_blank', 'noopener');
     else if (j) alert(`Chưa cấu hình link ứng tuyển cho: ${j.title_vi}`);
   };
+
   window.nanshuoCmsCloseDetail = () => {
     const m = document.getElementById('cms-job-detail');
     if (!m) return;
     m.classList.add('opacity-0');
     setTimeout(() => m.classList.add('hidden'), 250);
   };
+
   window.nanshuoCmsDetail = (id) => {
     const j = cmsJobs.find(x => Number(x.id) === Number(id));
     if (!j) return;
@@ -208,12 +237,14 @@ if (!configured) {
       if (features.about === true) updateAbout(s.about || {});
       if (features.brands === true && brandsRes.data) renderBrands(brandsRes.data);
       if (features.jobs === true && jobsRes.data) renderJobs(jobsRes.data);
+      enhanceStoreLinks();
       console.info('[Nanshuo CMS] Loaded', features);
     } catch (e) {
       console.warn('[Nanshuo CMS] Không tải được CMS, giữ nguyên index.html:', e?.message || e);
+      enhanceStoreLinks();
     }
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, {once:true});
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
   else boot();
 }
