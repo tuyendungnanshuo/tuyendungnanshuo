@@ -9,6 +9,7 @@ const brandParam = (params.get('brand') || '').trim();
 const storeParam = (params.get('store') || '').trim();
 let lang = 'vi';
 let brand = null;
+let storeProfile = null;
 let products = [];
 let category = 'all';
 let query = '';
@@ -23,6 +24,35 @@ const fallbackBrands = {
   GEK:{name:'GEK',desc_vi:'Phong cách tinh tế và trẻ trung.',desc_zh:'精致奢雅的时尚风范。',image_url:'https://i.ibb.co/9mT4nWsk/GEK.jpg'},
   SANHE:{name:'Sanhe',desc_vi:'Trang phục mặc nhà chất lượng.',desc_zh:'高品质精雅居家服饰。',image_url:'https://i.ibb.co/N6xTJTDZ/Sanhe.png'}
 };
+
+const FASHION_CATEGORIES = [
+  {key:'tops',vi:'Áo',zh:'上衣',icon:'fa-shirt',keywords:['ao','shirt','top','blouse','tee','t shirt','somi','so mi']},
+  {key:'pants',vi:'Quần',zh:'裤装',icon:'fa-person',keywords:['quan','pants','trouser','jean','short']},
+  {key:'dresses',vi:'Váy / Đầm',zh:'连衣裙',icon:'fa-person-dress',keywords:['vay','dam','dress']},
+  {key:'skirts',vi:'Chân váy',zh:'半身裙',icon:'fa-person-dress',keywords:['chan vay','skirt']},
+  {key:'sets',vi:'Set / Bộ',zh:'套装',icon:'fa-layer-group',keywords:['set','bo','combo','suit']},
+  {key:'outerwear',vi:'Áo khoác',zh:'外套',icon:'fa-vest',keywords:['ao khoac','jacket','coat','blazer','cardigan']},
+  {key:'footwear',vi:'Giày / Dép',zh:'鞋履',icon:'fa-shoe-prints',keywords:['giay','dep','sandal','sneaker','shoe','footwear']},
+  {key:'bags',vi:'Túi xách',zh:'包袋',icon:'fa-bag-shopping',keywords:['tui','bag','handbag']},
+  {key:'accessories',vi:'Phụ kiện',zh:'配饰',icon:'fa-gem',keywords:['phu kien','accessory','belt','mu','non','khan','kinh','jewelry']},
+  {key:'homewear',vi:'Đồ mặc nhà',zh:'家居服',icon:'fa-house',keywords:['do mac nha','homewear','pajama','pyjama','ngu']},
+  {key:'other',vi:'Khác',zh:'其他',icon:'fa-ellipsis',keywords:[]}
+];
+
+function categoryMetaFromProduct(p) {
+  const raw = normalize([p.category_vi,p.category_zh,p.name_vi,p.name_zh].filter(Boolean).join(' '));
+  // Match specific categories first to avoid "Áo khoác" becoming generic "Áo".
+  const order = ['outerwear','skirts','homewear','dresses','footwear','bags','accessories','sets','pants','tops'];
+  for (const key of order) {
+    const meta = FASHION_CATEGORIES.find(x => x.key === key);
+    if (meta?.keywords.some(k => raw.includes(normalize(k)))) return meta;
+  }
+  return FASHION_CATEGORIES.find(x => x.key === 'other');
+}
+
+function categoryMetaByKey(key) {
+  return FASHION_CATEGORIES.find(x => x.key === key) || FASHION_CATEGORIES[FASHION_CATEGORIES.length - 1];
+}
 
 const esc = (s) => String(s ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const normalize = (s) => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase();
@@ -68,36 +98,52 @@ function renderHeader() {
   $('#crumb-store').textContent = storeParam || (lang==='zh'?'门店':'Cửa hàng');
   $('#brand-pill').textContent = displayBrand;
   $('#store-title').textContent = storeParam || displayBrand;
-  $('#brand-desc').textContent = lang === 'zh' ? (brand?.desc_zh || brand?.desc_vi || '') : (brand?.desc_vi || '');
+  $('#brand-desc').textContent = lang === 'zh'
+    ? (storeProfile?.description_zh || brand?.desc_zh || brand?.desc_vi || '')
+    : (storeProfile?.description_vi || brand?.desc_vi || '');
   document.title = `${displayBrand} · ${storeParam || ''} | Nanshuo`;
-  if (brand?.image_url) {
-    $('#brand-image').src = brand.image_url;
-    $('#brand-image').alt = displayBrand;
-    $('#brand-image-wrap').classList.remove('hidden');
+
+  const imageUrl = storeProfile?.image_url || brand?.image_url || '';
+  const img = $('#brand-image');
+  const placeholder = $('#store-image-placeholder');
+  if (imageUrl) {
+    img.src = imageUrl;
+    img.alt = `${displayBrand} - ${storeParam}`;
+    img.classList.remove('hidden');
+    placeholder?.classList.add('hidden');
+    img.onerror = () => {
+      img.classList.add('hidden');
+      placeholder?.classList.remove('hidden');
+    };
+  } else {
+    img.removeAttribute('src');
+    img.classList.add('hidden');
+    placeholder?.classList.remove('hidden');
   }
+  $('#brand-image-wrap').classList.remove('hidden');
 }
 
 function categories() {
-  const map = new Map();
+  const used = new Map();
   products.forEach(p => {
-    const vi = p.category_vi || 'Sản phẩm';
-    const zh = p.category_zh || vi;
-    const key = normalize(vi);
-    if (!map.has(key)) map.set(key,{key,vi,zh});
+    const meta = categoryMetaFromProduct(p);
+    used.set(meta.key, meta);
   });
-  return [...map.values()];
+  return FASHION_CATEGORIES.filter(meta => used.has(meta.key));
 }
 
 function renderCategories() {
   const cats = categories();
   const allLabel = lang==='zh'?'全部':'Tất cả';
-  $('#category-filters').innerHTML = [`<button data-cat="all" class="cat-btn px-4 py-2.5 rounded-full text-xs font-bold ${category==='all'?'bg-secondary text-white':'bg-white border border-gray-200 text-gray-600'}">${allLabel}</button>`,...cats.map(c=>`<button data-cat="${esc(c.key)}" class="cat-btn px-4 py-2.5 rounded-full text-xs font-bold ${category===c.key?'bg-secondary text-white':'bg-white border border-gray-200 text-gray-600'}">${esc(lang==='zh'?c.zh:c.vi)}</button>`)].join('');
+  const allButton = `<button data-cat="all" class="cat-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-bold ${category==='all'?'bg-secondary text-white':'bg-white border border-gray-200 text-gray-600'}"><i class="fa-solid fa-border-all"></i>${allLabel}</button>`;
+  const catButtons = cats.map(c => `<button data-cat="${esc(c.key)}" class="cat-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-bold ${category===c.key?'bg-secondary text-white':'bg-white border border-gray-200 text-gray-600'}"><i class="fa-solid ${esc(c.icon)}"></i>${esc(lang==='zh'?c.zh:c.vi)}</button>`);
+  $('#category-filters').innerHTML = [allButton, ...catButtons].join('');
   document.querySelectorAll('.cat-btn').forEach(b=>b.onclick=()=>{category=b.dataset.cat;renderCategories();renderProducts()});
 }
 
 function filteredProducts() {
   return products.filter(p => {
-    const catKey = normalize(p.category_vi || 'Sản phẩm');
+    const catKey = categoryMetaFromProduct(p).key;
     const matchesCat = category==='all' || catKey===category;
     const hay = normalize([p.name_vi,p.name_zh,p.description_vi,p.description_zh,p.category_vi,p.category_zh,p.sku].join(' '));
     return matchesCat && (!query || hay.includes(normalize(query)));
@@ -111,7 +157,8 @@ function renderProducts() {
     const imgs = imagesOf(p);
     const img = imgs[0] || 'https://placehold.co/600x800/f1f1ef/9ca3af?text=Nanshuo';
     const name = textOf(p,'name');
-    const cat = textOf(p,'category') || (lang==='zh'?'商品':'Sản phẩm');
+    const catMeta = categoryMetaFromProduct(p);
+    const cat = lang === 'zh' ? catMeta.zh : catMeta.vi;
     return `<button data-product="${Number(p.id)}" class="product-card text-left bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-gray-100">
       <div class="aspect-[3/4] bg-stone-100 overflow-hidden"><img src="${esc(img)}" alt="${esc(name)}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy"></div>
       <div class="p-4 md:p-5"><div class="text-[9px] md:text-[10px] uppercase tracking-[.13em] font-bold text-primary">${esc(cat)}</div><h3 class="font-bold text-sm md:text-base text-secondary mt-1.5 line-clamp-2">${esc(name)}</h3>${p.price_text?`<div class="text-xs md:text-sm font-bold text-accent mt-2">${esc(p.price_text)}</div>`:''}</div>
@@ -129,7 +176,8 @@ function openProduct(id) {
   $('#modal-main-image').alt=textOf(p,'name');
   $('#modal-thumbs').innerHTML=shown.map((u,i)=>`<button data-thumb="${i}" class="aspect-square rounded-xl overflow-hidden border ${i===0?'border-primary':'border-transparent'}"><img src="${esc(u)}" class="w-full h-full object-cover" alt=""></button>`).join('');
   document.querySelectorAll('[data-thumb]').forEach(b=>b.onclick=()=>{$('#modal-main-image').src=shown[Number(b.dataset.thumb)];document.querySelectorAll('[data-thumb]').forEach(x=>x.classList.remove('border-primary'));b.classList.add('border-primary')});
-  $('#modal-category').textContent=textOf(p,'category');
+    const modalCat = categoryMetaFromProduct(p);
+  $('#modal-category').textContent = lang === 'zh' ? modalCat.zh : modalCat.vi;
   $('#modal-name').textContent=textOf(p,'name');
   $('#modal-price').textContent=p.price_text||'';
   $('#modal-description').textContent=textOf(p,'description');
@@ -279,8 +327,15 @@ async function load() {
   try {
     const br = await sb.from('brands').select('*').ilike('name',brandParam).limit(1);
     if (!br.error && br.data?.[0]) brand=br.data[0];
+    if (!brand?.id) { renderHeader(); renderCategories(); renderProducts(); return; }
+
+    // Ảnh và mô tả riêng của từng gian hàng.
+    const profileRes = await sb.from('store_profiles').select('*').eq('brand_id',brand.id).eq('active',true);
+    if (!profileRes.error) {
+      storeProfile = (profileRes.data || []).find(x => sameStore(x.store_location, storeParam)) || null;
+    }
     renderHeader();
-    if (!brand?.id) { renderCategories(); renderProducts(); return; }
+
     const pr = await sb.from('products').select('*').eq('brand_id',brand.id).eq('active',true).order('sort_order').order('id');
     if (pr.error) {
       $('#catalog-status').innerHTML = `<b>${lang==='zh'?'商品目录尚未启用。':'Danh mục sản phẩm chưa được kích hoạt.'}</b> ${lang==='zh'?'管理员需要先运行 catalog-setup.sql。':'Admin cần chạy file catalog-setup.sql trong Supabase một lần.'}`;
