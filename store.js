@@ -22,7 +22,29 @@ const fallbackBrands = {
 };
 
 const esc = (s) => String(s ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
-const normalize = (s) => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+const normalize = (s) => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase();
+const normalizeStore = (s) => {
+  let value = normalize(s)
+    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  value = value
+    .replace(/\bvincom plaza\b/g, ' ')
+    .replace(/\bvincom\b/g, ' ')
+    .replace(/\bvinhomes\b/g, ' ')
+    .replace(/\bvinhome\b/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  return value;
+};
+
+const sameStore = (a, b) => {
+  const left = normalizeStore(a);
+  const right = normalizeStore(b);
+  return left !== '' && left === right;
+};
 const imagesOf = (p) => Array.isArray(p.image_urls) ? p.image_urls.filter(Boolean) : [];
 const textOf = (p, key) => lang === 'zh' ? (p[`${key}_zh`] || p[`${key}_vi`] || '') : (p[`${key}_vi`] || '');
 
@@ -133,9 +155,34 @@ async function load() {
     if (pr.error) {
       $('#catalog-status').innerHTML = `<b>${lang==='zh'?'商品目录尚未启用。':'Danh mục sản phẩm chưa được kích hoạt.'}</b> ${lang==='zh'?'管理员需要先运行 catalog-setup.sql。':'Admin cần chạy file catalog-setup.sql trong Supabase một lần.'}`;
       $('#catalog-status').classList.remove('hidden');
-    } else products=(pr.data||[]).filter(p=>p.store_location==='__all__'||p.store_location===storeParam);
-  } catch (e) { console.warn(e); }
-  renderHeader(); renderCategories(); renderProducts();
+    } else {
+      const allBrandProducts = pr.data || [];
+      products = allBrandProducts.filter(
+        p => p.store_location === '__all__' || sameStore(p.store_location, storeParam)
+      );
+
+      if (allBrandProducts.length > 0 && products.length === 0) {
+        const savedStores = [...new Set(
+          allBrandProducts
+            .map(p => p.store_location)
+            .filter(x => x && x !== '__all__')
+        )];
+        console.info('[Nanshuo Catalog] Store URL:', storeParam);
+        console.info('[Nanshuo Catalog] Stores saved in products:', savedStores);
+      }
+    }
+  } catch (e) {
+    console.warn('[Nanshuo Catalog] Load error:', e);
+    $('#catalog-status').textContent =
+      lang === 'zh'
+        ? '暂时无法加载商品，请稍后再试。'
+        : 'Tạm thời chưa tải được sản phẩm. Vui lòng thử tải lại trang.';
+    $('#catalog-status').classList.remove('hidden');
+  }
+
+  renderHeader();
+  renderCategories();
+  renderProducts();
 }
 
 setLanguage('vi'); load();
