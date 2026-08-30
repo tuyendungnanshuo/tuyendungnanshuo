@@ -12,6 +12,9 @@ let brand = null;
 let products = [];
 let category = 'all';
 let query = '';
+let selectedProduct = null;
+let orderSubmitting = false;
+let lastOrderAt = 0;
 
 const fallbackBrands = {
   WARRIOR:{name:'Warrior',desc_vi:'Giày Sneaker trẻ trung và năng động.',desc_zh:'青春活力的运动鞋系列。',image_url:'https://i.ibb.co/x8zmTTCc/Warrior.jpg'},
@@ -119,6 +122,7 @@ function renderProducts() {
 
 function openProduct(id) {
   const p = products.find(x=>Number(x.id)===id); if(!p)return;
+  selectedProduct = p;
   const imgs = imagesOf(p); const fallback='https://placehold.co/600x800/f1f1ef/9ca3af?text=Nanshuo';
   const shown = imgs.length?imgs:[fallback];
   $('#modal-main-image').src=shown[0];
@@ -132,6 +136,132 @@ function openProduct(id) {
   $('#modal-store').textContent=storeParam;
   $('#product-modal').classList.remove('hidden'); document.body.style.overflow='hidden';
 }
+
+
+function showOrderError(message) {
+  const box = $('#order-error');
+  box.textContent = message;
+  box.classList.remove('hidden');
+}
+
+function clearOrderError() {
+  const box = $('#order-error');
+  box.textContent = '';
+  box.classList.add('hidden');
+}
+
+function openOrderModal() {
+  if (!selectedProduct) return;
+  if (!sb) {
+    alert(lang === 'zh' ? '订购功能暂不可用。' : 'Tính năng đặt hàng tạm thời chưa sẵn sàng.');
+    return;
+  }
+
+  closeModal();
+  const form = $('#order-form');
+  form.reset();
+  $('#order-quantity').value = '1';
+  clearOrderError();
+  $('#order-success').classList.add('hidden');
+  $('#order-form-content').classList.remove('hidden');
+
+  const imgs = imagesOf(selectedProduct);
+  $('#order-product-image').src = imgs[0] || 'https://placehold.co/300x400/f1f1ef/9ca3af?text=Nanshuo';
+  $('#order-product-image').alt = textOf(selectedProduct, 'name');
+  $('#order-product-brand').textContent = brand?.name || brandParam;
+  $('#order-product-name').textContent = textOf(selectedProduct, 'name');
+  $('#order-product-meta').textContent = [storeParam, selectedProduct.price_text || ''].filter(Boolean).join(' · ');
+
+  $('#order-modal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => $('#order-name')?.focus(), 50);
+}
+
+function closeOrderModal() {
+  $('#order-modal').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function validPhone(value) {
+  const digits = String(value || '').replace(/\D/g, '');
+  return digits.length >= 9 && digits.length <= 12;
+}
+
+async function submitOrder(e) {
+  e.preventDefault();
+  if (orderSubmitting || !selectedProduct || !sb) return;
+
+  clearOrderError();
+  const fd = new FormData(e.currentTarget);
+
+  // Honeypot chống bot đơn giản.
+  if (String(fd.get('website') || '').trim()) {
+    $('#order-form-content').classList.add('hidden');
+    $('#order-success').classList.remove('hidden');
+    return;
+  }
+
+  const customerName = String(fd.get('customer_name') || '').trim();
+  const phone = String(fd.get('phone') || '').trim();
+  const address = String(fd.get('address') || '').trim();
+  const note = String(fd.get('note') || '').trim();
+  const quantity = Math.max(1, Math.min(99, Number(fd.get('quantity')) || 1));
+
+  if (customerName.length < 2) return showOrderError(lang === 'zh' ? '请输入姓名。' : 'Vui lòng nhập họ và tên.');
+  if (!validPhone(phone)) return showOrderError(lang === 'zh' ? '请输入有效联系电话。' : 'Vui lòng nhập số điện thoại hợp lệ.');
+  if (address.length < 5) return showOrderError(lang === 'zh' ? '请输入联系/收货地址。' : 'Vui lòng nhập địa chỉ liên hệ/nhận hàng.');
+  if (!fd.has('privacy')) return showOrderError(lang === 'zh' ? '请确认信息使用说明。' : 'Vui lòng xác nhận đồng ý sử dụng thông tin để hỗ trợ đơn hàng.');
+
+  // Hạn chế gửi lặp liên tục do double click.
+  const now = Date.now();
+  if (now - lastOrderAt < 4000) return showOrderError(lang === 'zh' ? '请稍候再提交。' : 'Vui lòng chờ vài giây trước khi gửi lại.');
+
+  const payload = {
+    product_id: Number(selectedProduct.id) || null,
+    brand_id: Number(brand?.id) || null,
+    brand_name: brand?.name || brandParam || '',
+    store_location: storeParam || '',
+    product_name: selectedProduct.name_vi || selectedProduct.name_zh || '',
+    product_sku: selectedProduct.sku || '',
+    price_text: selectedProduct.price_text || '',
+    quantity,
+    customer_name: customerName,
+    phone,
+    address,
+    note,
+    privacy_accepted: true,
+    source_url: location.href.slice(0, 1000)
+  };
+
+  const btn = $('#order-submit');
+  orderSubmitting = true;
+  btn.disabled = true;
+  const oldHtml = btn.innerHTML;
+  btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin mr-2"></i>${lang === 'zh' ? '正在提交...' : 'Đang gửi...'}`;
+
+  try {
+    const { error } = await sb.from('orders').insert(payload);
+    if (error) throw error;
+    lastOrderAt = Date.now();
+    $('#order-form-content').classList.add('hidden');
+    $('#order-success').classList.remove('hidden');
+    $('#order-code').textContent = '';
+  } catch (err) {
+    console.warn('[Nanshuo Order] Submit error:', err);
+    const missingTable = err?.code === '42P01' || /orders/i.test(err?.message || '') && /relation|schema cache|not find/i.test(err?.message || '');
+    showOrderError(missingTable
+      ? (lang === 'zh' ? '订购功能尚未启用。管理员需要先运行 orders-setup.sql。' : 'Chức năng đặt hàng chưa được kích hoạt. Admin cần chạy file orders-setup.sql trong Supabase.')
+      : (lang === 'zh' ? '暂时无法提交，请稍后再试或直接联系门店。' : 'Tạm thời chưa gửi được yêu cầu. Vui lòng thử lại hoặc liên hệ trực tiếp cửa hàng.'));
+  } finally {
+    orderSubmitting = false;
+    btn.disabled = false;
+    btn.innerHTML = oldHtml;
+  }
+}
+
+$('#open-order-btn').onclick = openOrderModal;
+document.querySelectorAll('[data-close-order]').forEach(b => b.onclick = closeOrderModal);
+$('#order-form').addEventListener('submit', submitOrder);
 
 function closeModal(){ $('#product-modal').classList.add('hidden'); document.body.style.overflow=''; }
 document.querySelectorAll('[data-close-modal]').forEach(b=>b.onclick=closeModal);
