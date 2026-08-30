@@ -1,0 +1,85 @@
+
+/* =========================================================
+   NANSHUO - LARGE IMAGE OVERRIDE
+   Load AFTER brands-ui.js / existing brand styles
+   ========================================================= */
+
+#brands .nanshuo-brand-grid {
+  gap: 28px !important;
+}
+
+/* Card rộng hơn, ảnh lớn hơn */
+#brands .nanshuo-brand-card {
+  width: 100% !important;
+  border-radius: 28px !important;
+}
+
+/* Ảnh thương hiệu: tỷ lệ 4:3 để nhìn rõ gian hàng */
+#brands .nanshuo-brand-image {
+  aspect-ratio: 4 / 3 !important;
+  min-height: 0 !important;
+}
+
+#brands .nanshuo-brand-image img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+/* Nội dung thoáng hơn */
+#brands .nanshuo-brand-body {
+  padding: 24px !important;
+}
+
+#brands .nanshuo-brand-copy {
+  min-height: 104px !important;
+}
+
+#brands .nanshuo-brand-title-row h3 {
+  font-size: 23px !important;
+  line-height: 1.15 !important;
+}
+
+#brands .nanshuo-brand-description {
+  font-size: 13px !important;
+  line-height: 1.75 !important;
+}
+
+/* Địa chỉ dễ đọc hơn */
+#brands .nanshuo-store-link {
+  font-size: 11px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+/* Mobile: 1 card/hàng */
+@media (max-width: 639px) {
+  #brands .nanshuo-brand-card {
+    width: 100% !important;
+  }
+
+  #brands .nanshuo-brand-copy {
+    min-height: 0 !important;
+  }
+}
+
+/* Tablet: 2 card/hàng */
+@media (min-width: 640px) and (max-width: 1023px) {
+  #brands .nanshuo-brand-card {
+    width: calc(50% - 14px) !important;
+  }
+}
+
+/* Desktop phổ biến: 3 card/hàng */
+@media (min-width: 1024px) and (max-width: 1599px) {
+  #brands .nanshuo-brand-card {
+    width: calc(33.3333% - 18.7px) !important;
+  }
+}
+
+/* Màn hình rất rộng: tối đa 4 card/hàng */
+@media (min-width: 1600px) {
+  #brands .nanshuo-brand-card {
+    width: calc(25% - 21px) !important;
+  }
+}
