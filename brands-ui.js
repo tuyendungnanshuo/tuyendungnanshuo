@@ -2,7 +2,70 @@
   'use strict';
 
   const STYLE_ID = 'nanshuo-brands-premium-ui';
-  const MAX_VISIBLE_STORES = 3;
+  // Public directory additions and corrections, also applied after CMS renders.
+  const STORE_ADDITIONS = {
+    yanbaby: ['Malibu Walk', 'Vincom Hạ Long', 'Aeon Hạ Long', 'Vincom Vinh', 'Vincom Hà Tĩnh'],
+    mermaid: ['Vincom Trần Duy Hưng', 'Malibu Walk', 'Vincom Imperia Hải Phòng']
+  };
+  const locationKey = value => String(value).normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').toLowerCase()
+    .replace(/^(yanbaby|mermaid|gek|sanhe)\s+/, '')
+    .replace(/vincom plaza/g, 'vincom').replace(/\s+/g, ' ').trim();
+
+  function updateDirectory(brand, list) {
+    const brandKey = brand.toLowerCase();
+    const seen = new Set();
+    [...list.children].forEach(el => {
+      let key = locationKey(el.textContent);
+      if (brandKey === 'sanhe' && key === 'vincom tran duy hung') {
+        el.remove();
+        return;
+      }
+      if (brandKey === 'gek' && /^(vinhome|vinhomes) ocean park 1$/.test(key)) {
+        el.textContent = 'Vincom Ocean Park 1';
+        if (el.tagName === 'A') el.setAttribute('href', storeUrl(brand, el.textContent));
+        key = locationKey(el.textContent);
+      }
+      if (seen.has(key)) el.remove();
+      else seen.add(key);
+    });
+    (STORE_ADDITIONS[brandKey] || []).forEach(store => {
+      if (seen.has(locationKey(store))) return;
+      const el = document.createElement('span');
+      el.textContent = store;
+      list.appendChild(el);
+      seen.add(locationKey(store));
+    });
+  }
+
+  function groupStores(list, links) {
+    const groups = [
+      { vi: 'Hà Nội', zh: '河内', links: [] },
+      { vi: 'Các tỉnh/thành khác', zh: '其他省市', links: [] }
+    ];
+    links.forEach(link => {
+      const key = locationKey(link.textContent);
+      const outside = /ha long|hai phong|ha tinh|\bvinh\b|bac ninh|thanh hoa|viet tri|ocean park 2/.test(key);
+      groups[outside ? 1 : 0].links.push(link);
+    });
+    list.replaceChildren();
+    groups.forEach(group => {
+      if (!group.links.length) return;
+      const section = document.createElement('section');
+      section.className = 'nanshuo-store-region';
+      const heading = document.createElement('h4');
+      heading.className = 'nanshuo-store-region-title';
+      const vi = document.createElement('span');
+      vi.className = 'lang-vi';
+      vi.textContent = group.vi;
+      const zh = document.createElement('span');
+      zh.className = 'lang-zh';
+      zh.textContent = group.zh;
+      heading.append(vi, zh);
+      section.append(heading, ...group.links);
+      list.appendChild(section);
+    });
+  }
   let enhancing = false;
 
   function injectStyles() {
@@ -173,6 +236,16 @@
         gap: 5px !important;
       }
 
+      #brands .nanshuo-store-region + .nanshuo-store-region { margin-top: 14px; }
+      #brands .nanshuo-store-region-title {
+        margin: 0 0 5px;
+        padding: 8px 10px;
+        background: #f7f3ed;
+        border-radius: 6px;
+        color: #8f714b;
+        font-size: 11px;
+        font-weight: 700;
+      }
       #brands .nanshuo-store-link {
         width: 100% !important;
         min-width: 0 !important;
@@ -228,7 +301,7 @@
         min-width: 0;
         overflow: hidden;
         text-overflow: ellipsis;
-        white-space: nowrap;
+        white-space: normal;
       }
 
       #brands .nanshuo-store-arrow {
@@ -414,6 +487,7 @@
 
     if (!imageWrap || !body || !storeList) return;
 
+    updateDirectory(brand, storeList);
     const rawStoreElements = [...storeList.children];
     const storeCount = rawStoreElements.length;
 
@@ -456,38 +530,7 @@
       oldLabel.replaceWith(heading);
     }
 
-    links.forEach((link, index) => {
-      if (index >= MAX_VISIBLE_STORES) {
-        link.classList.add('nanshuo-store-extra');
-        link.hidden = true;
-      }
-    });
-
-    if (links.length > MAX_VISIBLE_STORES) {
-      const hiddenCount = links.length - MAX_VISIBLE_STORES;
-
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'nanshuo-store-toggle';
-      button.setAttribute('aria-expanded', 'false');
-      button.innerHTML = `<span>Xem tất cả ${links.length} cửa hàng</span><i class="fa-solid fa-chevron-down"></i>`;
-
-      button.addEventListener('click', () => {
-        const expanded = button.getAttribute('aria-expanded') === 'true';
-
-        card.querySelectorAll('.nanshuo-store-extra').forEach(el => {
-          el.hidden = expanded;
-        });
-
-        button.setAttribute('aria-expanded', String(!expanded));
-
-        button.innerHTML = expanded
-          ? `<span>Xem tất cả ${links.length} cửa hàng</span><i class="fa-solid fa-chevron-down"></i>`
-          : `<span>Thu gọn</span><i class="fa-solid fa-chevron-up"></i>`;
-      });
-
-      storeSection.appendChild(button);
-    }
+    groupStores(storeList, links);
 
     card.dataset.nanshuoPremiumUi = '1';
   }
