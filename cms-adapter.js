@@ -6,7 +6,7 @@ const esc = (s) => String(s ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&
 const lines = (s) => String(s ?? '').split(/\r?\n/).map(x => x.trim()).filter(Boolean);
 
 function storeUrl(brand, store) {
-  return `store.html?brand=${encodeURIComponent(String(brand || '').trim())}&store=${encodeURIComponent(String(store || '').trim())}`;
+  return `store.html?v=20260926-logo2&brand=${encodeURIComponent(String(brand || '').trim())}&store=${encodeURIComponent(String(store || '').trim())}`;
 }
 
 function enhanceStoreLinks() {
