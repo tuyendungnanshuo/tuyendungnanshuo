@@ -62,33 +62,64 @@
     });
   }
 
-  function groupStores(list, links) {
-    const groups = [
-      { vi: 'Hà Nội', zh: '河内', links: [] },
-      { vi: 'Các tỉnh/thành khác', zh: '其他省市', links: [] }
+  function storeProvince(store) {
+    const key = locationKey(store);
+    const provinces = [
+      [/hai phong/, 'Hải Phòng', '海防市'],
+      [/ha long|quang ninh/, 'Quảng Ninh', '广宁省'],
+      [/ha tinh/, 'Hà Tĩnh', '河静省'],
+      [/\bvinh\b|nghe an/, 'Nghệ An', '乂安省'],
+      [/bac ninh/, 'Bắc Ninh', '北宁省'],
+      [/thanh hoa/, 'Thanh Hóa', '清化省'],
+      [/viet tri|phu tho/, 'Phú Thọ', '富寿省'],
+      [/ocean park 2|hung yen/, 'Hưng Yên', '兴安省']
     ];
+    const match = provinces.find(([pattern]) => pattern.test(key));
+    return match ? { vi: match[1], zh: match[2] } : null;
+  }
+
+  function bilingualHeading(tag, className, viText, zhText) {
+    const heading = document.createElement(tag);
+    heading.className = className;
+    for (const [lang, text] of [['vi', viText], ['zh', zhText]]) {
+      const span = document.createElement('span');
+      span.className = 'lang-' + lang;
+      span.textContent = text;
+      heading.appendChild(span);
+    }
+    return heading;
+  }
+
+  function groupStores(list, links) {
+    const hanoi = [];
+    const provinces = new Map();
     links.forEach(link => {
-      const key = locationKey(link.dataset.storeName || link.textContent);
-      const outside = /ha long|hai phong|ha tinh|\bvinh\b|bac ninh|thanh hoa|viet tri|ocean park 2/.test(key);
-      groups[outside ? 1 : 0].links.push(link);
+      const province = storeProvince(link.dataset.storeName || link.textContent);
+      if (!province) { hanoi.push(link); return; }
+      if (!provinces.has(province.vi)) provinces.set(province.vi, { ...province, links: [] });
+      provinces.get(province.vi).links.push(link);
     });
     list.replaceChildren();
-    groups.forEach(group => {
-      if (!group.links.length) return;
+    if (hanoi.length) {
       const section = document.createElement('section');
       section.className = 'nanshuo-store-region';
-      const heading = document.createElement('h4');
-      heading.className = 'nanshuo-store-region-title';
-      const vi = document.createElement('span');
-      vi.className = 'lang-vi';
-      vi.textContent = group.vi;
-      const zh = document.createElement('span');
-      zh.className = 'lang-zh';
-      zh.textContent = group.zh;
-      heading.append(vi, zh);
-      section.append(heading, ...group.links);
+      section.append(bilingualHeading('h4', 'nanshuo-store-region-title', 'Hà Nội', '河内'), ...hanoi);
       list.appendChild(section);
-    });
+    }
+    if (provinces.size) {
+      const section = document.createElement('section');
+      section.className = 'nanshuo-store-region';
+      section.appendChild(bilingualHeading('h4', 'nanshuo-store-region-title', 'Các tỉnh/thành khác', '其他省市'));
+      [...provinces.values()].sort((a, b) => a.vi.localeCompare(b.vi, 'vi')).forEach(province => {
+        const area = document.createElement('section');
+        area.className = 'nanshuo-store-province';
+        const heading = bilingualHeading('h5', 'nanshuo-store-province-title', province.vi, province.zh);
+        heading.style.cssText = 'margin:12px 0 3px;padding:0 3px;font-size:11px;font-weight:700;color:#8f714b';
+        area.append(heading, ...province.links);
+        section.appendChild(area);
+      });
+      list.appendChild(section);
+    }
   }
   let enhancing = false;
 
