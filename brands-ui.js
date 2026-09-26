@@ -12,6 +12,30 @@
     .replace(/^(yanbaby|mermaid|gek|sanhe)\s+/, '')
     .replace(/vincom plaza/g, 'vincom').replace(/\s+/g, ' ').trim();
 
+  // Keep Vietnamese identifiers for store URLs and geographic grouping.
+  const STORE_NAMES_ZH = {
+  "malibu walk": "Malibu Walk 商业街",
+  "vincom ha long": "下龙 Vincom 购物中心",
+  "aeon ha long": "下龙永旺购物中心",
+  "vincom vinh": "荣市 Vincom 购物中心",
+  "vincom ha tinh": "河静 Vincom 购物中心",
+  "vincom tran duy hung": "陈维兴 Vincom 购物中心",
+  "vincom imperia hai phong": "海防 Imperia Vincom 购物中心",
+  "vincom ocean park 1": "Vincom Ocean Park 1 购物中心",
+  "vincom times city": "Vincom Times City 购物中心",
+  "times city": "Times City 购物中心",
+  "vincom royal city": "Vincom Royal City 购物中心",
+  "vincom pham ngoc thach": "范玉石 Vincom 购物中心",
+  "go! thang long": "GO! 升龙购物中心",
+  "vinhome ocean park 2": "Vinhomes Ocean Park 2 都市区",
+  "vinhomes ocean park 2": "Vinhomes Ocean Park 2 都市区",
+  "vincom bac ninh": "北宁 Vincom 购物中心",
+  "134-136 le hoan, thanh hoa": "清化市黎桓街134–136号",
+  "vinhome smart city": "Vinhomes Smart City 都市区",
+  "vinhomes smart city": "Vinhomes Smart City 都市区",
+  "vincom viet tri": "越池 Vincom 购物中心"
+};
+
   function updateDirectory(brand, list) {
     const brandKey = brand.toLowerCase();
     const seen = new Set();
@@ -44,7 +68,7 @@
       { vi: 'Các tỉnh/thành khác', zh: '其他省市', links: [] }
     ];
     links.forEach(link => {
-      const key = locationKey(link.textContent);
+      const key = locationKey(link.dataset.storeName || link.textContent);
       const outside = /ha long|hai phong|ha tinh|\bvinh\b|bac ninh|thanh hoa|viet tri|ocean park 2/.test(key);
       groups[outside ? 1 : 0].links.push(link);
     });
@@ -429,7 +453,9 @@
         : storeUrl(brand, store);
 
     link.className = 'nanshuo-store-link';
-    link.title = `Xem sản phẩm ${brand} tại ${store}`;
+    link.dataset.storeName = store;
+    const storeZh = STORE_NAMES_ZH[locationKey(store)] || store;
+    link.title = `${brand} — ${store} / ${storeZh}`;
 
     const left = document.createElement('span');
     left.className = 'nanshuo-store-link-left';
@@ -440,7 +466,13 @@
 
     const name = document.createElement('span');
     name.className = 'nanshuo-store-name';
-    name.textContent = store;
+    const nameVi = document.createElement('span');
+    nameVi.className = 'lang-vi';
+    nameVi.textContent = store;
+    const nameZh = document.createElement('span');
+    nameZh.className = 'lang-zh';
+    nameZh.textContent = storeZh;
+    name.append(nameVi, nameZh);
 
     const arrow = document.createElement('i');
     arrow.className = 'fa-solid fa-arrow-up-right-from-square nanshuo-store-arrow';
