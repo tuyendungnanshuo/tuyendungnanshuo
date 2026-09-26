@@ -424,7 +424,7 @@
   }
 
   function storeUrl(brand, store) {
-    return `store.html?brand=${encodeURIComponent(String(brand || '').trim())}&store=${encodeURIComponent(String(store || '').trim())}`;
+    return `store.html?v=20260926-logo2&brand=${encodeURIComponent(String(brand || '').trim())}&store=${encodeURIComponent(String(store || '').trim())}`;
   }
 
   function getStoreContainer(card) {
@@ -452,6 +452,11 @@
         ? sourceEl.getAttribute('href')
         : storeUrl(brand, store);
 
+    const destination = new URL(link.href, document.baseURI);
+    if (destination.origin === location.origin && destination.pathname.endsWith('/store.html')) {
+      destination.searchParams.set('v', '20260926-logo2');
+      link.href = destination.href;
+    }
     link.className = 'nanshuo-store-link';
     link.dataset.storeName = store;
     const storeZh = STORE_NAMES_ZH[locationKey(store)] || store;
