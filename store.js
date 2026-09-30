@@ -39,13 +39,35 @@ const FASHION_CATEGORIES = [
   {key:'other',vi:'Khác',zh:'其他',icon:'fa-ellipsis',keywords:[]}
 ];
 
+
+const BRAND_CATEGORY_ORDER = {
+  YANBABY: ['dresses','tops','skirts','sets','pants','outerwear','bags','accessories'],
+  MERMAID: ['dresses','sets','outerwear','tops','pants','skirts','bags','accessories'],
+  GEK: ['tops','pants','outerwear','sets','skirts','dresses','accessories','bags'],
+  SANHE: ['homewear','sets','tops','pants','accessories'],
+  WARRIOR: ['footwear','accessories','bags']
+};
+let sortOrder = 'featured';
+const ui = (vi, zh) => lang === 'zh' ? zh : vi;
+function plannedCategories() {
+  const keys = BRAND_CATEGORY_ORDER[String(brand?.name || brandParam).toUpperCase()] || FASHION_CATEGORIES.map(c=>c.key);
+  return keys.map(categoryMetaByKey);
+}
+function numericPrice(p) {
+  const text = String(p.price_text || '').trim();
+  if (!/^[\d\s.,]+\s*(?:đ|₫|vnd|vnđ)$/i.test(text)) return null;
+  return Number(text.replace(/[^0-9]/g, '')) || null;
+}
+
 function categoryMetaFromProduct(p) {
+  const explicit = FASHION_CATEGORIES.find(c => [c.key, normalize(c.vi), c.zh].includes(normalize(p.category_vi)) || (p.category_zh && c.zh === p.category_zh));
+  if (explicit) return explicit;
   const raw = normalize([p.category_vi,p.category_zh,p.name_vi,p.name_zh].filter(Boolean).join(' '));
   // Match specific categories first to avoid "Áo khoác" becoming generic "Áo".
   const order = ['outerwear','skirts','homewear','dresses','footwear','bags','accessories','sets','pants','tops'];
   for (const key of order) {
     const meta = FASHION_CATEGORIES.find(x => x.key === key);
-    if (meta?.keywords.some(k => raw.includes(normalize(k)))) return meta;
+    if (meta?.keywords.some(k => (' '+raw.replace(/[^a-z0-9]+/g,' ')+' ').includes(' '+normalize(k)+' '))) return meta;
   }
   return FASHION_CATEGORIES.find(x => x.key === 'other');
 }
@@ -129,29 +151,50 @@ function categories() {
     const meta = categoryMetaFromProduct(p);
     used.set(meta.key, meta);
   });
-  return FASHION_CATEGORIES.filter(meta => used.has(meta.key));
+  const preferred = plannedCategories();
+  return [...preferred, ...FASHION_CATEGORIES.filter(meta => used.has(meta.key) && !preferred.some(c=>c.key===meta.key))];
 }
 
 function renderCategories() {
   const cats = categories();
-  const allLabel = lang==='zh'?'全部':'Tất cả';
-  const allButton = `<button data-cat="all" class="cat-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-bold ${category==='all'?'bg-secondary text-white':'bg-white border border-gray-200 text-gray-600'}"><i class="fa-solid fa-border-all"></i>${allLabel}</button>`;
-  const catButtons = cats.map(c => `<button data-cat="${esc(c.key)}" class="cat-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-bold ${category===c.key?'bg-secondary text-white':'bg-white border border-gray-200 text-gray-600'}"><i class="fa-solid ${esc(c.icon)}"></i>${esc(lang==='zh'?c.zh:c.vi)}</button>`);
-  $('#category-filters').innerHTML = [allButton, ...catButtons].join('');
-  document.querySelectorAll('.cat-btn').forEach(b=>b.onclick=()=>{category=b.dataset.cat;renderCategories();renderProducts()});
+  $('#category-filters').innerHTML = [`<button data-cat="all" class="catalog-chip ${category==='all'?'selected':''}">${ui('Tất cả sản phẩm','全部商品')} <span>${products.length}</span></button>`,
+    ...cats.map(c=>`<button data-cat="${c.key}" class="catalog-chip ${category===c.key?'selected':''}">${esc(ui(c.vi,c.zh))}</button>`)].join('');
+  $('#category-showcase').innerHTML = cats.map(c=>{
+    const count = products.filter(p=>categoryMetaFromProduct(p).key===c.key).length;
+    return `<button data-cat="${c.key}" class="category-tile ${category===c.key?'selected':''}"><span class="category-icon"><i class="fa-solid ${c.icon}" aria-hidden="true"></i></span><span class="category-title">${esc(ui(c.vi,c.zh))}</span><span class="category-count">${count ? count+' '+ui('sản phẩm','件商品') : ui('Đang cập nhật','更新中')}</span><span class="category-arrow" aria-hidden="true">↗</span></button>`;
+  }).join('');
+  document.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{
+    category=b.dataset.cat;renderCategories();renderProducts();
+    $('#catalog-results').scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  $('#product-sort').innerHTML = [['featured','Đề xuất','推荐排序'],['newest','Mới thêm','最新上架'],['name','Tên A–Z','名称排序'],['price-asc','Giá tăng dần','价格从低到高'],['price-desc','Giá giảm dần','价格从高到低']].map(([value,vi,zh])=>`<option value="${value}">${ui(vi,zh)}</option>`).join('');
+  $('#product-sort').value=sortOrder;
 }
 
 function filteredProducts() {
-  return products.filter(p => {
+  const result = products.filter(p => {
     const catKey = categoryMetaFromProduct(p).key;
     const matchesCat = category==='all' || catKey===category;
     const hay = normalize([p.name_vi,p.name_zh,p.description_vi,p.description_zh,p.category_vi,p.category_zh,p.sku].join(' '));
     return matchesCat && (!query || hay.includes(normalize(query)));
   });
+  if (sortOrder === 'name') result.sort((a,b)=>textOf(a,'name').localeCompare(textOf(b,'name'),lang==='zh'?'zh':'vi'));
+  if (sortOrder === 'newest') result.sort((a,b)=>Number(b.id)-Number(a.id));
+  if (sortOrder.startsWith('price-')) result.sort((a,b)=>{
+    const pa=numericPrice(a),pb=numericPrice(b);
+    if(pa===null)return pb===null?0:1;
+    if(pb===null)return -1;
+    return sortOrder==='price-asc'?pa-pb:pb-pa;
+  });
+  return result;
 }
 
 function renderProducts() {
   const list = filteredProducts();
+  $('#results-count').textContent = list.length+' '+ui('sản phẩm','件商品');
+  $('#reset-filters').hidden = category==='all' && !query;
+  $('#empty-title').textContent = products.length ? ui('Chưa tìm thấy sản phẩm phù hợp','未找到匹配商品') : ui('Bộ sưu tập đang được cập nhật','商品系列更新中');
+  $('#empty-copy').textContent = products.length ? ui('Hãy thử danh mục khác hoặc xóa bộ lọc.','请尝试其他分类或清除筛选。') : ui('Bạn có thể khám phá danh mục bên trên và liên hệ để được tư vấn mẫu, giá và kích cỡ.','您可以浏览上方分类，或联系我们咨询款式、价格和尺码。');
   $('#empty-state').classList.toggle('hidden', list.length > 0);
   $('#product-grid').innerHTML = list.map(p => {
     const imgs = imagesOf(p);
@@ -161,7 +204,7 @@ function renderProducts() {
     const cat = lang === 'zh' ? catMeta.zh : catMeta.vi;
     return `<button data-product="${Number(p.id)}" class="product-card text-left bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-gray-100">
       <div class="aspect-[3/4] bg-stone-100 overflow-hidden"><img src="${esc(img)}" alt="${esc(name)}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy"></div>
-      <div class="p-4 md:p-5"><div class="text-[9px] md:text-[10px] uppercase tracking-[.13em] font-bold text-primary">${esc(cat)}</div><h3 class="font-bold text-sm md:text-base text-secondary mt-1.5 line-clamp-2">${esc(name)}</h3>${p.price_text?`<div class="text-xs md:text-sm font-bold text-accent mt-2">${esc(p.price_text)}</div>`:''}</div>
+      <div class="p-4 md:p-5"><div class="text-[9px] md:text-[10px] uppercase tracking-[.13em] font-bold text-primary">${esc(cat)}</div><h3 class="font-bold text-sm md:text-base text-secondary mt-1.5 line-clamp-2">${esc(name)}</h3><div class="text-xs md:text-sm font-bold text-accent mt-2">${esc(p.price_text || ui('Liên hệ giá','咨询价格'))}</div><div class="mt-4 pt-3 border-t border-stone-100 text-xs font-bold text-primary">${ui('Xem chi tiết & đặt hàng','查看详情及订购')} <span aria-hidden="true">↗</span></div></div>
     </button>`;
   }).join('');
   document.querySelectorAll('[data-product]').forEach(b=>b.onclick=()=>openProduct(Number(b.dataset.product)));
@@ -179,7 +222,7 @@ function openProduct(id) {
     const modalCat = categoryMetaFromProduct(p);
   $('#modal-category').textContent = lang === 'zh' ? modalCat.zh : modalCat.vi;
   $('#modal-name').textContent=textOf(p,'name');
-  $('#modal-price').textContent=p.price_text||'';
+  $('#modal-price').textContent=p.price_text||ui('Liên hệ để nhận giá','请联系咨询价格');
   $('#modal-description').textContent=textOf(p,'description');
   $('#modal-store').textContent=storeParam;
   $('#product-modal').classList.remove('hidden'); document.body.style.overflow='hidden';
@@ -209,6 +252,7 @@ function openOrderModal() {
   const form = $('#order-form');
   form.reset();
   $('#order-quantity').value = '1';
+  syncDelivery();
   clearOrderError();
   $('#order-success').classList.add('hidden');
   $('#order-form-content').classList.remove('hidden');
@@ -251,10 +295,17 @@ async function submitOrder(e) {
 
   const customerName = String(fd.get('customer_name') || '').trim();
   const phone = String(fd.get('phone') || '').trim();
-  const address = String(fd.get('address') || '').trim();
-  const note = String(fd.get('note') || '').trim();
-  const quantity = Math.max(1, Math.min(99, Number(fd.get('quantity')) || 1));
+  const pickup = fd.get('delivery') === 'pickup';
+  const address = pickup ? 'Nhận tại cửa hàng: '+storeParam : String(fd.get('address') || '').trim();
+  const note = [
+    fd.get('size') && 'Kích cỡ / 尺码: '+String(fd.get('size')).trim(),
+    fd.get('color') && 'Màu sắc / 颜色: '+String(fd.get('color')).trim(),
+    fd.get('delivery') === 'pickup' ? 'Nhận tại cửa hàng / 到店自取' : 'Giao hàng / 配送',
+    String(fd.get('note') || '').trim()
+  ].filter(Boolean).join('\n');
+  const quantity = Number(fd.get('quantity'));
 
+  if (!Number.isInteger(quantity) || quantity < 1 || quantity > 99) return showOrderError(ui('Số lượng phải là số nguyên từ 1 đến 99.','数量须为1至99的整数。'));
   if (customerName.length < 2) return showOrderError(lang === 'zh' ? '请输入姓名。' : 'Vui lòng nhập họ và tên.');
   if (!validPhone(phone)) return showOrderError(lang === 'zh' ? '请输入有效联系电话。' : 'Vui lòng nhập số điện thoại hợp lệ.');
   if (address.length < 5) return showOrderError(lang === 'zh' ? '请输入联系/收货地址。' : 'Vui lòng nhập địa chỉ liên hệ/nhận hàng.');
@@ -298,7 +349,7 @@ async function submitOrder(e) {
     console.warn('[Nanshuo Order] Submit error:', err);
     const missingTable = err?.code === '42P01' || /orders/i.test(err?.message || '') && /relation|schema cache|not find/i.test(err?.message || '');
     showOrderError(missingTable
-      ? (lang === 'zh' ? '订购功能尚未启用。管理员需要先运行 orders-setup.sql。' : 'Chức năng đặt hàng chưa được kích hoạt. Admin cần chạy file orders-setup.sql trong Supabase.')
+      ? (lang === 'zh' ? '订购功能尚未启用。请联系门店获取帮助。' : 'Chức năng đặt hàng chưa được kích hoạt. Vui lòng liên hệ hotline để được hỗ trợ.')
       : (lang === 'zh' ? '暂时无法提交，请稍后再试或直接联系门店。' : 'Tạm thời chưa gửi được yêu cầu. Vui lòng thử lại hoặc liên hệ trực tiếp cửa hàng.'));
   } finally {
     orderSubmitting = false;
@@ -306,6 +357,13 @@ async function submitOrder(e) {
     btn.innerHTML = oldHtml;
   }
 }
+
+function syncDelivery() {
+  const pickup = document.querySelector('[name=delivery]:checked')?.value === 'pickup';
+  $('#order-address').required = !pickup;
+  $('#order-address').closest('div').hidden = pickup;
+}
+document.querySelectorAll('[name=delivery]').forEach(input=>input.addEventListener('change',syncDelivery));
 
 $('#open-order-btn').onclick = openOrderModal;
 document.querySelectorAll('[data-close-order]').forEach(b => b.onclick = closeOrderModal);
@@ -338,7 +396,7 @@ async function load() {
 
     const pr = await sb.from('products').select('*').eq('brand_id',brand.id).eq('active',true).order('sort_order').order('id');
     if (pr.error) {
-      $('#catalog-status').innerHTML = `<b>${lang==='zh'?'商品目录尚未启用。':'Danh mục sản phẩm chưa được kích hoạt.'}</b> ${lang==='zh'?'管理员需要先运行 catalog-setup.sql。':'Admin cần chạy file catalog-setup.sql trong Supabase một lần.'}`;
+      $('#catalog-status').innerHTML = `<b>${lang==='zh'?'商品目录尚未启用。':'Danh mục sản phẩm chưa được kích hoạt.'}</b> ${lang==='zh'?'请联系门店咨询商品。':'Vui lòng liên hệ để được tư vấn sản phẩm.'}`;
       $('#catalog-status').classList.remove('hidden');
     } else {
       const allBrandProducts = pr.data || [];
@@ -370,4 +428,8 @@ async function load() {
   renderProducts();
 }
 
+$('#product-sort').onchange=e=>{sortOrder=e.target.value;renderProducts()};
+$('#reset-filters').onclick=()=>{category='all';query='';$('#product-search').value='';renderCategories();renderProducts()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeOrderModal()}});
 setLanguage('vi'); load();
+

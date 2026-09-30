@@ -13,6 +13,22 @@
     body{font-family:'Plus Jakarta Sans',sans-serif;background:#faf9f6}.serif{font-family:'Playfair Display',serif}
     html[lang="vi"] .lang-zh{display:none!important}html[lang="zh"] .lang-vi{display:none!important}
     .product-card{transition:transform .3s ease,box-shadow .3s ease}.product-card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(17,24,39,.09)}
+
+    #catalog-results{scroll-margin-top:100px}
+    .category-showcase{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:24px}
+    .category-tile{position:relative;text-align:left;padding:22px;background:linear-gradient(145deg,#fff,#f5f1eb);border:1px solid #e8e1d7;border-radius:18px;transition:transform .2s,border-color .2s}
+    .category-tile:hover{transform:translateY(-3px);border-color:#b29267}
+    .category-tile.selected{border-color:#8e714b;box-shadow:0 0 0 1px #8e714b}
+    .category-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:#ede5d9;color:#8e714b;font-size:18px;margin-bottom:16px}
+    .category-title{display:block;font-size:15px;font-weight:700;color:#111827}
+    .category-count{display:block;font-size:11px;color:#6b7280;margin-top:5px}
+    .category-arrow{position:absolute;top:22px;right:20px;color:#8e714b}
+    .catalog-chip{padding:10px 16px;border:1px solid #e5e7eb;border-radius:999px;background:white;font-size:12px;font-weight:600}
+    .catalog-chip.selected{background:#111827;color:white;border-color:#111827}
+    .catalog-chip span{opacity:.6;margin-left:5px}
+    .catalog-chip:focus-visible,.category-tile:focus-visible{outline:3px solid #b29267;outline-offset:3px}
+    @media(max-width:640px){.category-showcase{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.category-tile{padding:16px}.category-arrow{top:16px;right:14px}}
+
   </style>
 </head>
 <body class="text-gray-800 antialiased">
@@ -49,25 +65,33 @@
       </div>
     </section>
 
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+      <div class="text-[10px] tracking-[.2em] uppercase text-primary font-bold">SHOP BY CATEGORY</div>
+      <h2 class="serif text-3xl mt-2"><span class="lang-vi">Tìm phong cách của bạn</span><span class="lang-zh">探索您的风格</span></h2>
+      <p class="text-sm text-gray-500 mt-3"><span class="lang-vi">Khám phá các nhóm sản phẩm của thương hiệu. Số lượng mẫu hiển thị được cập nhật theo từng cửa hàng.</span><span class="lang-zh">浏览品牌商品分类，各门店展示款式分别更新。</span></p>
+      <div id="category-showcase" class="category-showcase"></div>
+      <div class="mt-6 flex flex-wrap gap-5 text-xs text-gray-500"><span><i class="fa-solid fa-images text-primary mr-2"></i><span class="lang-vi">Xem ảnh & thông tin</span><span class="lang-zh">查看图片及详情</span></span><span><i class="fa-solid fa-bag-shopping text-primary mr-2"></i><span class="lang-vi">Gửi yêu cầu đặt hàng</span><span class="lang-zh">提交订购需求</span></span><span><i class="fa-solid fa-headset text-primary mr-2"></i><span class="lang-vi">Cửa hàng liên hệ xác nhận</span><span class="lang-zh">门店联系确认</span></span></div>
+    </section>
+    <section id="catalog-results" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
       <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
         <div><div class="text-[10px] text-primary tracking-[.18em] uppercase font-bold"><span class="lang-vi">Bộ sưu tập tại cửa hàng</span><span class="lang-zh">门店商品系列</span></div><h2 class="serif text-3xl md:text-4xl font-bold mt-2"><span class="lang-vi">Khám phá sản phẩm</span><span class="lang-zh">探索商品</span></h2></div>
-        <div class="relative w-full lg:w-80"><i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i><input id="product-search" class="w-full bg-white border border-gray-200 rounded-2xl py-3.5 pl-11 pr-4 outline-none focus:border-primary" placeholder="Tìm sản phẩm..."></div>
+        <div class="relative w-full lg:w-80"><i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i><input id="product-search" aria-label="Tìm sản phẩm / 搜索商品" class="w-full bg-white border border-gray-200 rounded-2xl py-3.5 pl-11 pr-4 outline-none focus:border-primary" placeholder="Tìm sản phẩm..."></div>
       </div>
       <div id="category-filters" class="mt-7 flex flex-wrap gap-2"></div>
+      <div class="mt-6 flex flex-wrap justify-between items-center gap-4"><div class="flex gap-3 items-center"><span id="results-count" class="text-sm text-gray-500" aria-live="polite"></span><button id="reset-filters" hidden class="text-xs text-primary underline"><span class="lang-vi">Xóa bộ lọc</span><span class="lang-zh">清除筛选</span></button></div><label class="text-xs text-gray-500 flex items-center gap-2"><span class="lang-vi">Sắp xếp</span><span class="lang-zh">排序</span><select id="product-sort" class="border border-gray-200 rounded-xl bg-white py-2.5 px-3 text-gray-800"></select></label></div>
       <div id="catalog-status" class="mt-8 hidden rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm text-amber-900"></div>
       <div id="product-grid" class="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"></div>
-      <div id="empty-state" class="hidden mt-10 text-center bg-white border border-gray-100 rounded-3xl p-10"><div class="w-14 h-14 mx-auto rounded-2xl bg-stone-100 grid place-items-center text-gray-400"><i class="fa-solid fa-shirt text-xl"></i></div><h3 class="serif text-xl font-bold mt-5"><span class="lang-vi">Sản phẩm đang được cập nhật</span><span class="lang-zh">商品正在更新中</span></h3><p class="text-sm text-gray-500 mt-2"><span class="lang-vi">Vui lòng quay lại sau để xem bộ sưu tập mới nhất tại cửa hàng.</span><span class="lang-zh">请稍后回来查看本店最新商品。</span></p></div>
+      <div id="empty-state" class="hidden mt-10 text-center bg-white border border-gray-100 rounded-3xl p-10"><div class="w-14 h-14 mx-auto rounded-2xl bg-stone-100 grid place-items-center text-gray-400"><i class="fa-solid fa-shirt text-xl"></i></div><h3 id="empty-title" class="serif text-xl font-bold mt-5"><span class="lang-vi">Sản phẩm đang được cập nhật</span><span class="lang-zh">商品正在更新中</span></h3><p id="empty-copy" class="text-sm text-gray-500 mt-2"><span class="lang-vi">Vui lòng quay lại sau để xem bộ sưu tập mới nhất tại cửa hàng.</span><span class="lang-zh">请稍后回来查看本店最新商品。</span></p><a href="tel:0866826475" class="inline-flex gap-2 items-center mt-6 px-5 py-3 bg-secondary text-white rounded-full text-sm"><i class="fa-solid fa-phone"></i>0866 826 475</a></div>
     </section>
   </main>
 
   <footer class="bg-secondary text-white"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col md:flex-row justify-between gap-5"><div><a href="/" aria-label="NANSHUO" style="display:block;width:245px;max-width:100%;background:#fff;border-radius:6px;padding:4px 8px"><img src="/nanshuo-logo-red.png" alt="NANSHUO 南硕" width="2172" height="724" style="display:block;width:100%;height:auto;object-fit:contain"></a><div class="text-xs text-white/40 mt-2">CÔNG TY TNHH QUẢN LÝ THƯƠNG HIỆU NANSHUO VIỆT NAM</div></div><a href="/" class="text-sm text-white/60 hover:text-white"><i class="fa-solid fa-arrow-left mr-2"></i><span class="lang-vi">Quay lại trang tuyển dụng</span><span class="lang-zh">返回招聘主页</span></a></div></footer>
 
-  <div id="product-modal" class="fixed inset-0 z-50 hidden"><div class="absolute inset-0 bg-black/70 backdrop-blur-sm" data-close-modal></div><div class="relative min-h-full flex items-end md:items-center justify-center p-0 md:p-5"><div class="bg-white w-full md:max-w-5xl rounded-t-3xl md:rounded-3xl max-h-[94vh] overflow-auto"><div class="grid md:grid-cols-2"><div class="bg-stone-100 p-4"><div class="aspect-[3/4] rounded-2xl overflow-hidden bg-white"><img id="modal-main-image" class="w-full h-full object-cover" alt=""></div><div id="modal-thumbs" class="mt-3 grid grid-cols-5 gap-2"></div></div><div class="p-6 md:p-9"><div id="modal-category" class="text-[10px] text-primary uppercase tracking-[.17em] font-bold"></div><h3 id="modal-name" class="serif text-3xl font-bold mt-2"></h3><div id="modal-price" class="text-lg font-bold text-accent mt-4"></div><p id="modal-description" class="text-gray-500 leading-7 mt-5 whitespace-pre-line"></p><div class="mt-8 rounded-2xl bg-bgLight p-4 text-sm text-gray-500"><i class="fa-solid fa-location-dot text-primary mr-2"></i><span id="modal-store"></span></div><div class="mt-7 grid sm:grid-cols-2 gap-3"><button id="open-order-btn" type="button" class="rounded-2xl bg-primary text-white py-3.5 font-bold hover:bg-primaryDark transition"><i class="fa-solid fa-bag-shopping mr-2"></i><span class="lang-vi">Đặt hàng</span><span class="lang-zh">提交购买意向</span></button><button data-close-modal type="button" class="rounded-2xl bg-secondary text-white py-3.5 font-bold hover:bg-gray-800 transition"><span class="lang-vi">Đóng</span><span class="lang-zh">关闭</span></button></div></div></div></div></div></div>
+  <div id="product-modal" role="dialog" aria-modal="true" aria-labelledby="modal-name" class="fixed inset-0 z-50 hidden"><div class="absolute inset-0 bg-black/70 backdrop-blur-sm" data-close-modal></div><div class="relative min-h-full flex items-end md:items-center justify-center p-0 md:p-5"><div class="bg-white w-full md:max-w-5xl rounded-t-3xl md:rounded-3xl max-h-[94vh] overflow-auto"><div class="grid md:grid-cols-2"><div class="bg-stone-100 p-4"><div class="aspect-[3/4] rounded-2xl overflow-hidden bg-white"><img id="modal-main-image" class="w-full h-full object-cover" alt=""></div><div id="modal-thumbs" class="mt-3 grid grid-cols-5 gap-2"></div></div><div class="p-6 md:p-9"><div id="modal-category" class="text-[10px] text-primary uppercase tracking-[.17em] font-bold"></div><h3 id="modal-name" class="serif text-3xl font-bold mt-2"></h3><div id="modal-price" class="text-lg font-bold text-accent mt-4"></div><p id="modal-description" class="text-gray-500 leading-7 mt-5 whitespace-pre-line"></p><div class="mt-8 rounded-2xl bg-bgLight p-4 text-sm text-gray-500"><i class="fa-solid fa-location-dot text-primary mr-2"></i><span id="modal-store"></span></div><div class="mt-7 grid sm:grid-cols-2 gap-3"><button id="open-order-btn" type="button" class="rounded-2xl bg-primary text-white py-3.5 font-bold hover:bg-primaryDark transition"><i class="fa-solid fa-bag-shopping mr-2"></i><span class="lang-vi">Đặt hàng</span><span class="lang-zh">提交购买意向</span></button><button data-close-modal type="button" class="rounded-2xl bg-secondary text-white py-3.5 font-bold hover:bg-gray-800 transition"><span class="lang-vi">Đóng</span><span class="lang-zh">关闭</span></button></div></div></div></div></div></div>
 
 
   <!-- ORDER MODAL -->
-  <div id="order-modal" class="fixed inset-0 z-[60] hidden">
+  <div id="order-modal" role="dialog" aria-modal="true" aria-label="Yêu cầu đặt hàng / 订购需求" class="fixed inset-0 z-[60] hidden">
     <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" data-close-order></div>
     <div class="relative min-h-full flex items-end md:items-center justify-center p-0 md:p-5">
       <div class="bg-white w-full md:max-w-3xl rounded-t-3xl md:rounded-3xl max-h-[95vh] overflow-auto shadow-2xl">
@@ -77,7 +101,7 @@
             <h3 class="serif text-2xl md:text-3xl font-bold mt-1"><span class="lang-vi">Thông tin khách hàng</span><span class="lang-zh">客户信息</span></h3>
             <p class="text-sm text-gray-500 mt-2"><span class="lang-vi">Cửa hàng sẽ liên hệ để xác nhận sản phẩm, giá và phương thức nhận hàng.</span><span class="lang-zh">门店将联系您确认商品、价格及收货方式。</span></p>
           </div>
-          <button type="button" data-close-order class="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex-shrink-0"><i class="fa-solid fa-xmark"></i></button>
+          <button type="button" aria-label="Đóng / 关闭" data-close-order class="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex-shrink-0"><i class="fa-solid fa-xmark"></i></button>
         </div>
 
         <form id="order-form" class="p-6 md:p-8">
@@ -89,7 +113,7 @@
               <div class="min-w-0"><div id="order-product-brand" class="text-[10px] text-primary uppercase tracking-[.15em] font-bold"></div><div id="order-product-name" class="font-bold text-secondary mt-1"></div><div id="order-product-meta" class="text-xs text-gray-500 mt-2"></div></div>
             </div>
 
-            <div class="mt-6 grid md:grid-cols-2 gap-5">
+            <div class="mt-6 grid md:grid-cols-2 gap-5"><div><label for="order-size" class="block text-xs font-bold text-gray-600 mb-2"><span class="lang-vi">Kích cỡ mong muốn</span><span class="lang-zh">期望尺码</span></label><input id="order-size" name="size" maxlength="50" class="w-full border border-gray-200 rounded-2xl px-4 py-3.5"></div><div><label for="order-color" class="block text-xs font-bold text-gray-600 mb-2"><span class="lang-vi">Màu sắc mong muốn</span><span class="lang-zh">期望颜色</span></label><input id="order-color" name="color" maxlength="50" class="w-full border border-gray-200 rounded-2xl px-4 py-3.5"></div><fieldset class="md:col-span-2 text-sm"><legend class="text-xs font-bold text-gray-600 mb-2"><span class="lang-vi">Cách nhận hàng mong muốn</span><span class="lang-zh">期望收货方式</span></legend><label class="mr-5"><input type="radio" name="delivery" value="shipping" checked> <span class="lang-vi">Giao hàng</span><span class="lang-zh">配送</span></label><label><input type="radio" name="delivery" value="pickup"> <span class="lang-vi">Nhận tại cửa hàng</span><span class="lang-zh">到店自取</span></label></fieldset>
               <div><label for="order-name" class="block text-xs font-bold text-gray-600 mb-2"><span class="lang-vi">Họ và tên *</span><span class="lang-zh">姓名 *</span></label><input id="order-name" name="customer_name" maxlength="100" autocomplete="name" required class="w-full border border-gray-200 rounded-2xl px-4 py-3.5 outline-none focus:border-primary" placeholder="Nguyễn Văn A"></div>
               <div><label for="order-phone" class="block text-xs font-bold text-gray-600 mb-2"><span class="lang-vi">Số điện thoại *</span><span class="lang-zh">联系电话 *</span></label><input id="order-phone" name="phone" type="tel" inputmode="tel" maxlength="20" autocomplete="tel" required class="w-full border border-gray-200 rounded-2xl px-4 py-3.5 outline-none focus:border-primary" placeholder="09xxxxxxxx"></div>
               <div><label for="order-quantity" class="block text-xs font-bold text-gray-600 mb-2"><span class="lang-vi">Số lượng *</span><span class="lang-zh">数量 *</span></label><input id="order-quantity" name="quantity" type="number" min="1" max="99" value="1" required class="w-full border border-gray-200 rounded-2xl px-4 py-3.5 outline-none focus:border-primary"></div>
@@ -116,6 +140,7 @@
   </div>
 
   <script src="config.js"></script>
-  <script type="module" src="store.js?v=20260830-fashion1"></script>
+  <script type="module" src="store.js?v=20260930-boutique"></script>
 </body>
 </html>
+
